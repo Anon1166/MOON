@@ -13,7 +13,7 @@ onMounted(async () => {
  
 <template>
    
-  <div v-if="announcement.length === 0"  class="flex justify-center mt-[25%] text-4xl font-bold">No Announcement</div>
+  <div v-if="announcement.length ===0"  class="flex justify-center mt-[25%] text-4xl font-bold">No Announcement</div>
   <div v-else>
     <div class="w-full h-full p-5 mb-10">
       <h1 class="text-4xl text-center">SIT Announcement System (SAS)</h1>
