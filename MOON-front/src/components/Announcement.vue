@@ -7,51 +7,57 @@ onMounted(async () => {
   await fetchAnnouncement()
   // announcement.value.sort((a, b) => b.announcementId - a.announcementId)
 })
-
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 </script>
  
 <template>
-   
-  <div v-if="announcement.length ===0"  class="flex justify-center mt-[25%] text-4xl font-bold">No Announcement</div>
-  <div v-else>
-    <div class="w-full h-full p-5 mb-10">
-      <h1 class="text-4xl text-center">SIT Announcement System (SAS)</h1>
-    </div>
+  <div class="w-full h-full">
+    <div v-show="announcement.length === 0" class="flex justify-center mt-[25%]  text-4xl font-bold">No Announcement</div>
+    <div v-show="announcement.length !==0">
+      <div class="p-5 mb-2 mt-6">
+        <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
+      </div>
+      <div class="flex flex-row space-x-2 ml-[20%] mb-5">
+        <div class="font-bold">Date/Time show in Timezone:</div>
+        <div class="">{{ timezone }}</div>
+      </div>
 
-    <div class="flex justify-center ">
-      <table class="w-3/4 h-80 text-center ">
-        <thead>
-          <tr class="bg-gray-200">
-            <th class="border border-slate-300 ">No.</th>
-            <th class="border border-slate-300 ">Title</th>
-            <th class="border border-slate-300 ">Category</th>
-            <th class="border border-slate-300 ">Publish Date</th>
-            <th class="border border-slate-300 ">Close Date</th>
-            <th class="border border-slate-300 ">Display</th>
-            <th class="border border-slate-300 ">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in announcement " :key="index">
-            <td class="border border-slate-300 ">{{ index + 1 }}</td>
-            <td class="border border-slate-300 ">{{ item.announcementTitle }}</td>
-            <td class="border border-slate-300 ">{{ item.announcementCategory }}</td>
-            <td class="border border-slate-300 ">{{ changeTime(item.publishDate) }}</td>
-            <td class="border border-slate-300 ">{{ changeTime(item.closeDate) }}</td>
-            <td class="border border-slate-300 ">{{ item.announcementDisplay }}</td>
 
-            <td class="border border-slate-300 ">
-              <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
-                <button class="btn-success btn-sm rounded-md bg-slate-400">View</button>
-              </router-link>
-            </td>
 
-          </tr>
+      <div class="flex overflow-x-auto">
+        <table class="table ml-[20%]">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Publish Date</th>
+              <th>Close Date</th>
+              <th>Display</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
 
-        </tbody>
+            <tr v-for="(item, index) in announcement " :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.announcementTitle }}</td>
+              <td>{{ item.announcementCategory }}</td>
+              <td>{{ changeTime(item.publishDate) }}</td>
+              <td>{{ changeTime(item.closeDate) }}</td>
+              <td>{{ item.announcementDisplay }}</td>
 
-      </table>
+              <td>
+                <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
+                  <button class="btn-success btn-sm rounded-md bg-green-200 font-bold">View</button>
+                </router-link>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

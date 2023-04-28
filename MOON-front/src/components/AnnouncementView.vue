@@ -11,13 +11,13 @@ onMounted(async () => {
 </script>
  
 <template>
-    <div class="ml-10 mr-10 w-3/5 ">
+    <div class="ml-28  w-2/4">
         
         <div class="p-5">
-            <h1 class="text-4xl">AnnouncementDetail:</h1>
+            <h1 class="text-3xl font-bold">AnnouncementDetail:</h1>
         </div>
-        <div class=" border border-solid  w-full text-left p-5 ">
-            <table>
+        <div>
+            <table class="table w-full border border-solid rounded-xl">
                 <tr>
                     <th>Title</th>
                     <td>{{ announcementDetail.announcementTitle }}</td>
@@ -49,7 +49,7 @@ onMounted(async () => {
 
 
 
-        <button class="btn-success btn-sm rounded-md mt-5 bg-slate-400" @click="$router.go(-1)">back</button>
+        <button class="btn-success btn-sm rounded-md mt-5 bg-green-200 font-bold" @click="$router.go(-1)">Back</button>
     </div>
 </template>
  
