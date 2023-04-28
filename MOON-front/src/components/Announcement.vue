@@ -11,14 +11,6 @@ onMounted(async () => {
 })
 
 
-
-const getDetail = async (annid) => {
-  await announcementById(annid)
-  console.log(annid)
-  router.push({ name: 'AnnouncementView', params: { id: annid } })
-}
-
-
 </script>
  
 <template>
@@ -48,10 +40,13 @@ const getDetail = async (annid) => {
             <td class="border border-slate-300 ">{{ item.publishDate }}</td>
             <td class="border border-slate-300 ">{{ item.closeDate }}</td>
             <td class="border border-slate-300 ">{{ item.announcementDisplay }}</td>
-            <!-- <router-link :to="{ name: 'AnnouncementView', params: { id: item.id}}"> -->
-            <td class="border border-slate-300 "><button class="btn-success btn-sm rounded-md bg-slate-400"
-                @click="getDetail(item.announcementId)">View</button></td>
-            <!-- </router-link> -->
+
+            <td class="border border-slate-300 ">
+              <router-link :to="{ name: 'AnnouncementView', params: { id: item.announcementId } }">
+                <button class="btn-success btn-sm rounded-md bg-slate-400">View</button>
+              </router-link>
+            </td>
+
           </tr>
 
         </tbody>

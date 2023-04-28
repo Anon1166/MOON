@@ -1,15 +1,14 @@
 <script setup>
-import { announcementDetail } from '../assets/fetch-data.js'
-// import { announcement, fetchAnnouncement, announcementDetail, announcementById } from '../fetch-data.js'
-// import { onMounted } from 'vue';
-// import { useRoute } from 'vue-router';
+import { announcementDetail, announcementById } from '../assets/fetch-data.js'
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
-// const params = useRoute()
-
-// onMounted(async () => {
-//       await announcementById()
-//       announcement.value.sort((a, b) => b.id - a.id)
-// })
+const { params } = useRoute()
+console.log(params.id)
+onMounted(async () => {
+    
+      await announcementById(params.id)
+})
 </script>
  
 <template>
@@ -59,7 +58,4 @@ td {
     padding-left: 3em;
 }
 
-/* tr {
-    margin-bottom: 50px;
-} */
 </style>
