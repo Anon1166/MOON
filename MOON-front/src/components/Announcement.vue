@@ -1,5 +1,5 @@
 <script setup>
-import { announcement, fetchAnnouncement, announcementById } from '../assets/fetch-data.js'
+import { announcement, fetchAnnouncement } from '../assets/fetch-data.js'
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -10,7 +10,12 @@ onMounted(async () => {
   announcement.value.sort((a, b) => b.announcementId - a.announcementId)
 })
 
-
+const changeTime = (date) => {
+  const time = new Date(date)
+  if (time.getFullYear() !== 1970) {
+    return time.toLocaleString('en-GB', {dateStyle: 'long', timeStyle: 'short'})
+  }
+}
 </script>
  
 <template>
@@ -37,8 +42,8 @@ onMounted(async () => {
             <td class="border border-slate-300 ">{{ index + 1 }}</td>
             <td class="border border-slate-300 ">{{ item.announcementTitle }}</td>
             <td class="border border-slate-300 ">{{ item.categoriesCategoryName }}</td>
-            <td class="border border-slate-300 ">{{ item.publishDate }}</td>
-            <td class="border border-slate-300 ">{{ item.closeDate }}</td>
+            <td class="border border-slate-300 ">{{ changeTime(item.publishDate) }}</td>
+            <td class="border border-slate-300 ">{{ changeTime(item.closeDate) }}</td>
             <td class="border border-slate-300 ">{{ item.announcementDisplay }}</td>
 
             <td class="border border-slate-300 ">
