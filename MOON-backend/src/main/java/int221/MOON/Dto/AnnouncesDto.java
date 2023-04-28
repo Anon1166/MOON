@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 @Setter
 
 public class AnnouncesDto {
+    private Integer announcementId;
     private String announcementTitle;
     private String categoriesCategoryName;
     private ZonedDateTime publishDate;

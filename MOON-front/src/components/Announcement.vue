@@ -1,5 +1,5 @@
 <script setup>
-import { announcement, fetchAnnouncement, announcementDetail, announcementById } from '../fetch-data.js'
+import { announcement, fetchAnnouncement, announcementById } from '../assets/fetch-data.js'
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -7,7 +7,7 @@ const router = useRouter()
 
 onMounted(async () => {
   await fetchAnnouncement()
-  announcement.value.sort((a, b) => b.id - a.id)
+  announcement.value.sort((a, b) => b.announcementId - a.announcementId)
 })
 
 
@@ -44,13 +44,13 @@ const getDetail = async (annid) => {
           <tr v-for="(item, index) in announcement " :key="index">
             <td class="border border-slate-300 ">{{ index + 1 }}</td>
             <td class="border border-slate-300 ">{{ item.announcementTitle }}</td>
-            <td class="border border-slate-300 ">{{ item.categoryid.categoryname }}</td>
+            <td class="border border-slate-300 ">{{ item.categoriesCategoryName }}</td>
             <td class="border border-slate-300 ">{{ item.publishDate }}</td>
             <td class="border border-slate-300 ">{{ item.closeDate }}</td>
             <td class="border border-slate-300 ">{{ item.announcementDisplay }}</td>
             <!-- <router-link :to="{ name: 'AnnouncementView', params: { id: item.id}}"> -->
             <td class="border border-slate-300 "><button class="btn-success btn-sm rounded-md bg-slate-400"
-                @click="getDetail(item.id)">View</button></td>
+                @click="getDetail(item.announcementId)">View</button></td>
             <!-- </router-link> -->
           </tr>
 

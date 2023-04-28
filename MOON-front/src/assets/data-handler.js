@@ -1,4 +1,4 @@
-const API_HOST = "http://25.40.139.90:5000/Announcement"
+const API_HOST = "http://localhost:8080/api/announcements"
 
 async function getAnnounment() {
     try {

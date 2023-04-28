@@ -1,5 +1,5 @@
 <script setup>
-import { announcementDetail } from '../fetch-data.js'
+import { announcementDetail } from '../assets/fetch-data.js'
 // import { announcement, fetchAnnouncement, announcementDetail, announcementById } from '../fetch-data.js'
 // import { onMounted } from 'vue';
 // import { useRoute } from 'vue-router';
@@ -25,7 +25,7 @@ import { announcementDetail } from '../fetch-data.js'
                 </tr>
                 <tr>
                     <th>Category</th>
-                    <td>{{ announcementDetail.categoryid.categoryname }}</td>
+                    <td>{{ announcementDetail.categoriesCategoryName }}</td>
                 </tr>
                 <tr>
                     <th>Description</th>

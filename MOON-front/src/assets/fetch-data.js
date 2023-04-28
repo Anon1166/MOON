@@ -1,4 +1,4 @@
-import { getAnnounment, getAnnounmentById} from "./assets/data-handler.js"
+import { getAnnounment, getAnnounmentById} from "./data-handler.js"
 import { ref } from 'vue'
 
 const announcement = ref([])
