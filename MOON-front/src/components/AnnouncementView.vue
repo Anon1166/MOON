@@ -12,10 +12,11 @@ onMounted(async () => {
  
 <template>
     <div class="ml-10 mr-10 w-3/5 ">
+        
         <div class="p-5">
             <h1 class="text-4xl">AnnouncementDetail:</h1>
         </div>
-        <div class=" border border-solid  w-full text-left">
+        <div class=" border border-solid  w-full text-left p-5 ">
             <table>
                 <tr>
                     <th>Title</th>
