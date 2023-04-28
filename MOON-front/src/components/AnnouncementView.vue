@@ -6,12 +6,12 @@ import { useRoute } from 'vue-router';
 const { params } = useRoute()
 
 onMounted(async () => {
-      await announcementById(params.id)
+    await announcementById(params.id)
 })
 </script>
  
 <template>
-    <div class="ml-10 mr-10 w-2/4 ">
+    <div class="ml-10 mr-10 w-3/5 ">
         <div class="p-5">
             <h1 class="text-4xl">AnnouncementDetail:</h1>
         </div>
@@ -23,7 +23,7 @@ onMounted(async () => {
                 </tr>
                 <tr>
                     <th>Category</th>
-                    <td>{{ announcementDetail.categoriesCategoryName }}</td>
+                    <td>{{ announcementDetail.announcementCategory }}</td>
                 </tr>
                 <tr>
                     <th>Description</th>
@@ -36,7 +36,7 @@ onMounted(async () => {
                 </tr>
                 <tr>
                     <th>Close Date</th>
-                    <td v-if="announcementDetail.closeDate !== null">{{ changeTime(announcementDetail.closeDate) }}</td> 
+                    <td v-if="announcementDetail.closeDate !== null">{{ changeTime(announcementDetail.closeDate) }}</td>
                     <td v-else>-</td>
                 </tr>
                 <tr>
@@ -56,5 +56,4 @@ onMounted(async () => {
 td {
     padding-left: 3em;
 }
-
 </style>

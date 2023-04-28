@@ -7,7 +7,9 @@ import int221.MOON.entities.Announces;
 import int221.MOON.repository.AnnouncesRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,8 +22,10 @@ public class AnnouncesService {
     @Autowired
     private ListMapper listMapper;
 
+
+
     public AnnouncesDetailDto getAnnouncesById(Integer annId) {
-        Announces m = announcesRepository.findById(annId).orElseThrow(() -> new RuntimeException("Announces id " + annId + "Does Not Exist !!!"));
+        Announces m = announcesRepository.findById(annId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id " + annId + "does not exist !!!"));
         return modelMapper.map(m, AnnouncesDetailDto.class);
 
 
@@ -29,6 +33,7 @@ public class AnnouncesService {
 
     public List<AnnouncesDto> getAnnounces() {
         List<Announces> m = announcesRepository.findAll();
+        m.sort((a,b) -> b.getAnnouncementId() - a.getAnnouncementId());
         return listMapper.mapList(m,AnnouncesDto.class,modelMapper);
     }
 

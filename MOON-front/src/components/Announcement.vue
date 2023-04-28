@@ -1,12 +1,11 @@
 <script setup>
-import { announcement, fetchAnnouncement, changeTime} from '../assets/data-manager.js'
+import { announcement, fetchAnnouncement, changeTime } from '../assets/data-manager.js'
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
 
 onMounted(async () => {
   await fetchAnnouncement()
-  announcement.value.sort((a, b) => b.announcementId - a.announcementId)
+  // announcement.value.sort((a, b) => b.announcementId - a.announcementId)
 })
 
 
@@ -35,13 +34,13 @@ onMounted(async () => {
           <tr v-for="(item, index) in announcement " :key="index">
             <td class="border border-slate-300 ">{{ index + 1 }}</td>
             <td class="border border-slate-300 ">{{ item.announcementTitle }}</td>
-            <td class="border border-slate-300 ">{{ item.categoriesCategoryName }}</td>
+            <td class="border border-slate-300 ">{{ item.announcementCategory }}</td>
             <td class="border border-slate-300 ">{{ changeTime(item.publishDate) }}</td>
             <td class="border border-slate-300 ">{{ changeTime(item.closeDate) }}</td>
             <td class="border border-slate-300 ">{{ item.announcementDisplay }}</td>
 
             <td class="border border-slate-300 ">
-              <router-link :to="{ name: 'AnnouncementView', params: { id: item.announcementId } }">
+              <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
                 <button class="btn-success btn-sm rounded-md bg-slate-400">View</button>
               </router-link>
             </td>
