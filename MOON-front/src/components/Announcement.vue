@@ -1,21 +1,15 @@
 <script setup>
-import { announcement, fetchAnnouncement } from '../assets/fetch-data.js'
+import { announcement, fetchAnnouncement, changeTime} from '../assets/data-manager.js'
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
 
 onMounted(async () => {
   await fetchAnnouncement()
   announcement.value.sort((a, b) => b.announcementId - a.announcementId)
 })
 
-const changeTime = (date) => {
-  const time = new Date(date)
-  if (time.getFullYear() !== 1970) {
-    return time.toLocaleString('en-GB', {dateStyle: 'long', timeStyle: 'short'})
-  }
-}
+
 </script>
  
 <template>

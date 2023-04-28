@@ -1,5 +1,5 @@
 <script setup>
-import { announcementDetail, announcementById } from '../assets/fetch-data.js'
+import { announcementDetail, announcementById, changeTime } from '../assets/data-manager.js'
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -32,12 +32,12 @@ onMounted(async () => {
                 </tr>
                 <tr>
                     <th>Publish Date</th>
-                    <td v-if="announcementDetail.publishDate !== null">{{ announcementDetail.publishDate }}</td>
+                    <td v-if="announcementDetail.publishDate !== null">{{ changeTime(announcementDetail.publishDate) }}</td>
                     <td v-else>-</td>
                 </tr>
                 <tr>
                     <th>Close Date</th>
-                    <td v-if="announcementDetail.closeDate !== null">{{ announcementDetail.closeDate }}</td> 
+                    <td v-if="announcementDetail.closeDate !== null">{{ changeTime(announcementDetail.closeDate) }}</td> 
                     <td v-else>-</td>
                 </tr>
                 <tr>

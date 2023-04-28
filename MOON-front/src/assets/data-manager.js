@@ -12,4 +12,11 @@ const announcementById = async (id) => {
     announcementDetail.value = await getAnnounmentById(id)
 }
 
-export {announcement, fetchAnnouncement, announcementDetail, announcementById }
+const changeTime = (date) => {
+    const time = new Date(date)
+    if (time.getFullYear() !== 1970) {
+      return time.toLocaleString('en-GB', {dateStyle: 'long', timeStyle: 'short'})
+    }
+  }
+
+export {announcement, fetchAnnouncement, announcementDetail, announcementById, changeTime }
