@@ -4,9 +4,8 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const { params } = useRoute()
-console.log(params.id)
+
 onMounted(async () => {
-    
       await announcementById(params.id)
 })
 </script>
