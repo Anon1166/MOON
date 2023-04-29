@@ -1,4 +1,4 @@
-const API_HOST = "http://localhost:8080/api/announcements"
+const API_HOST = import.meta.env.VITE_BASE_URL
 
 async function getAnnounment() {
     try {
