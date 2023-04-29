@@ -9,7 +9,7 @@ async function getAnnounment() {
         }
         else throw new Error('Error, data is error!')
     } catch (error) {
-        console.log(error)
+        
     }
 }
 
@@ -22,7 +22,7 @@ async function getAnnounmentById(id) {
         }
         else throw new Error('Error, data is error!')
     } catch (error) {
-        console.log(error)
+        
     }
 }
 
