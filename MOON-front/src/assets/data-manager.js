@@ -13,9 +13,14 @@ const announcementById = async (id) => {
 }
 
 const changeTime = (date) => {
+  
     const time = new Date(date)
+    console.log(time.getFullYear());  
+    console.log(time.toLocaleString('en-GB', {dateStyle: 'medium', timeStyle: 'short'}))
     if (time.getFullYear() > 1970) {
+      
       return time.toLocaleString('en-GB', {dateStyle: 'medium', timeStyle: 'short'})
+      
     }
   }
 
