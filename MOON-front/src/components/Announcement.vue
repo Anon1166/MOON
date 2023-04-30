@@ -39,8 +39,10 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
               <td class="truncate">{{ item.announcementTitle }}</td>
               <td class="hidden sm:table-cell">{{ item.announcementCategory }}</td>
-              <td class="hidden sm:table-cell">{{ changeTime(item.publishDate) }}</td>
-              <td class="hidden sm:table-cell">{{ changeTime(item.closeDate) }}</td>
+              <td v-if="item.publishDate !== null" class="hidden sm:table-cell">{{ changeTime(item.publishDate) }}</td>
+              <td v-else class="hidden sm:table-cell text-center">-</td>
+              <td v-if="item.closeDate !== null" class="hidden sm:table-cell">{{ changeTime(item.closeDate) }}</td>
+              <td v-else class="hidden sm:table-cell text-center">-</td>
               <td>{{ item.announcementDisplay }}</td>
               <td>
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
