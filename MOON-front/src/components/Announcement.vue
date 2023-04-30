@@ -12,8 +12,8 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
  
 <template>
   <div class="w-screen h-screen bg-cover flex flex-col  items-center">
-    <div v-show="announcement.length === 0" class="flex flex-auto items-center text-4xl font-bold">No Announcement</div>
-    <div v-show="announcement.length !== 0" class="w-full max-w-screen-lg">
+    <!-- <div v-show="announcement.length === 0" class="flex flex-auto items-center text-4xl font-bold">No Announcement</div> -->
+    <div class="w-full max-w-screen-lg">
       <div class="p-5 mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
       </div>
@@ -23,6 +23,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       </div>
       <div class="flex justify-center">
         <table class="table w-full">
+          
           <thead>
             <tr>
               <th class="hidden sm:table-cell">#</th>
@@ -35,26 +36,30 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in announcement " :key="index">
+             <tr v-for="(item, index) in announcement " :key="index" class="ann-item">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
-              <td class="truncate">{{ item.announcementTitle }}</td>
-              <td class="hidden sm:table-cell">{{ item.announcementCategory }}</td>
-              <td v-if="item.publishDate !== null" class="hidden sm:table-cell">{{ changeTime(item.publishDate) }}</td>
-              <td v-else class="hidden sm:table-cell text-center">-</td>
-              <td v-if="item.closeDate !== null" class="hidden sm:table-cell">{{ changeTime(item.closeDate) }}</td>
-              <td v-else class="hidden sm:table-cell text-center">-</td>
-              <td>{{ item.announcementDisplay }}</td>
-              <td>
+              <td class="truncate ann-title">{{ item.announcementTitle }}</td>
+              <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>
+              <td v-if="item.publishDate !== null" class="hidden sm:table-cell ann-publish-date">{{ changeTime(item.publishDate) }}</td>
+              <td v-else class="hidden sm:table-cell text-center ann-publish-date">-</td>
+              <td v-if="item.closeDate !== null" class="hidden sm:table-cell ann-close-date">{{ changeTime(item.closeDate) }}</td>
+              <td v-else class="hidden sm:table-cell text-center ann-close-date">-</td>
+              <td class="ann-display">{{ item.announcementDisplay }}</td>
+              <td class="ann-button ">
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
-                  <button class="btn-success btn-sm rounded-md bg-green-200 font-bold">View</button>
+                  <button class="btn-success btn-sm rounded-md bg-green-200 font-bold ">view</button>
                 </router-link>
               </td>
             </tr>
+          </tbody>
+          <tbody v-show="announcement.length === 0">
+              <th colspan="7" class=" text-center item-center text-2xl font-bold m-5">No Announcements</th>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  
 </template>
  
 <style scoped></style>
