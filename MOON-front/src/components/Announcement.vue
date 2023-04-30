@@ -12,7 +12,6 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
  
 <template>
   <div class="w-screen h-screen bg-cover flex flex-col  items-center">
-    <!-- <div v-show="announcement.length === 0" class="flex flex-auto items-center text-4xl font-bold">No Announcement</div> -->
     <div class="w-full max-w-screen-lg">
       <div class="p-5 mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
