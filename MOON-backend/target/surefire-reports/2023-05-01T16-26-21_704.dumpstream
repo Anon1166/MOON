@@ -1,5 +1,0 @@
-# Created at 2023-05-01T16:26:22.187
-Boot Manifest-JAR contains absolute paths in classpath 'D:\Learning\Year 2 Term 2\Integreted\MOON\MOON-backend\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-
