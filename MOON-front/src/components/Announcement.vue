@@ -13,7 +13,11 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
  
 <template>
   <div class="w-screen h-screen bg-cover flex flex-col  items-center">
+<<<<<<< HEAD
     <div class="w-full max-w-screen-xl">
+=======
+    <div class="w-full max-w-screen-lg">
+>>>>>>> ce7ec7f1de132f4b2a0ac8742726f9b8b2d24277
       <div class="p-5 mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
       </div>

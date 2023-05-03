@@ -6,7 +6,10 @@ import int221.MOON.Dto.EditAnnouncesDTO;
 import int221.MOON.entities.Announces;
 import int221.MOON.service.AnnouncesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 @CrossOrigin
@@ -26,6 +29,7 @@ public class AnnouncesController {
         return announcesService.getAnnouncesById(annId);
     }
 
+<<<<<<< HEAD
     @PostMapping("/add")
     public Announces createAnnouncement(@RequestBody EditAnnouncesDTO announces){
         return  announcesService.createAnnouncement(announces);
@@ -40,4 +44,6 @@ public class AnnouncesController {
     public void deleteAnnouncement(@PathVariable Integer announcementId ){
         announcesService.deleteAnnouncement(announcementId);
     }
+=======
+>>>>>>> ce7ec7f1de132f4b2a0ac8742726f9b8b2d24277
 }
