@@ -1,5 +1,5 @@
 <script setup>
-import { announcement, AddAnnouncement} from '../assets/data-manager.js'
+import { announcement } from '../assets/data-manager.js'
 const createAnn = {
   id: announcement.value.length+1,
   announcementTitle: "",
@@ -15,8 +15,8 @@ const createAnn = {
 <template>
 <div class="w-screen h-screen">
     <div>
-        <div>Announcement Detail:</div>
-        <div>category</div>
+        <p>Title : {{ message }}</p>
+        <input v-model="message" placeholder="" />
         
     </div>
 </div>
