@@ -10,7 +10,9 @@ import lombok.Setter;
 @Table (name = "category")
 public class Categories {
     @Id
+    @Column(name="categoryId")
     private Integer categoryId ;
+    @Column(name="categoryName")
     private String categoryName ;
 
 

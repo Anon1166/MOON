@@ -26,4 +26,51 @@ async function getAnnounmentById(id) {
     }
 }
 
-export { getAnnounment, getAnnounmentById }
+async function cerateAnnouncement(announcement) {
+    try {
+        const res = await fetch(`${API_PLAYERS}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(announcement)
+        })
+        if (res.status === 201) return res.json()
+        else throw new Error('cannot add!')
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function updateAnnouncement(announcement){
+    try {
+        const res = await fetch(`${API_PLAYERS}/${playerData.id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(announcement)
+        })
+        if (res.ok) {}
+        // console.log("Update Successfully")
+        else throw new Error('cannot add!')
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function deleteAnnoumcement(announcement){
+    try {
+        const res = await fetch(`${API_PLAYERS}/${announcement}`, {
+            method: 'DELETE'
+        })
+        if (res.ok) {
+            // console.log("Delete Successfully")
+        } else throw new Error('cannot delete!')
+    } catch (err) {
+        console.log(err)
+    }
+} 
+
+
+export { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement}

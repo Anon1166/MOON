@@ -23,5 +23,4 @@ public class AnnouncesDetailDto {
     private ZonedDateTime closeDate;
     @Enumerated(EnumType.STRING)
     private Enum announcementDisplay;
-
 }

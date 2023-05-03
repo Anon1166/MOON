@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Announcement from '../components/Announcement.vue'
 import AnnouncementView from '../components/AnnouncementView.vue'
 import PageNotfound from '../components/PageNotfound.vue'
+import AnnouncementCreate from '../components/AnnouncementCreate.vue'
 
 
 const history = createWebHistory()
@@ -21,6 +22,11 @@ const routes = [
         path: '/:notfoundpath(.*)',
         name: 'PageNotfound',
         component: PageNotfound
+    },
+    {
+        path: '/admin/announcement/add',
+        name: 'AddAnnouncement',
+        component: AnnouncementCreate
     }
 ]
 const router = createRouter({ history, routes })
