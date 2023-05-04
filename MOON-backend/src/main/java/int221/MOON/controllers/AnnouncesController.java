@@ -19,31 +19,32 @@ public class AnnouncesController {
     @Autowired
     private AnnouncesService announcesService;
 
+    @CrossOrigin
     @GetMapping("")
     public List<AnnouncesDto> getAnnounces(){
         return announcesService.getAnnounces();
     }
-
+    @CrossOrigin
     @GetMapping("/{annId}")
     public AnnouncesDetailDto getAnnouncesById(@PathVariable Integer annId){
         return announcesService.getAnnouncesById(annId);
     }
 
-<<<<<<< HEAD
+    @CrossOrigin
     @PostMapping("/add")
     public Announces createAnnouncement(@RequestBody EditAnnouncesDTO announces){
         return  announcesService.createAnnouncement(announces);
     }
-
+    @CrossOrigin
     @PutMapping("/{announcementId}")
     public Announces updateAnnouncement(@PathVariable Integer announcementId , @RequestBody EditAnnouncesDTO announces){
         return  announcesService.updateAnnouncement(announces,announcementId);
     }
-
+    @CrossOrigin
     @DeleteMapping("/{announcementId}")
     public void deleteAnnouncement(@PathVariable Integer announcementId ){
         announcesService.deleteAnnouncement(announcementId);
     }
-=======
->>>>>>> ce7ec7f1de132f4b2a0ac8742726f9b8b2d24277
+
+
 }

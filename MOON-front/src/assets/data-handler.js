@@ -28,14 +28,14 @@ async function getAnnounmentById(id) {
 
 async function cerateAnnouncement(announcement) {
     try {
-        const res = await fetch(`${API_PLAYERS}`, {
+        const res = await fetch(`${API_HOST}/add`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(announcement)
         })
-        if (res.status === 201) return res.json()
+        if (res.ok) return res.json()
         else throw new Error('cannot add!')
     } catch (err) {
         console.log(err)
@@ -44,7 +44,7 @@ async function cerateAnnouncement(announcement) {
 
 async function updateAnnouncement(announcement){
     try {
-        const res = await fetch(`${API_PLAYERS}/${playerData.id}`, {
+        const res = await fetch(`${API_HOST}/${playerData.id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -61,7 +61,7 @@ async function updateAnnouncement(announcement){
 
 async function deleteAnnoumcement(announcement){
     try {
-        const res = await fetch(`${API_PLAYERS}/${announcement}`, {
+        const res = await fetch(`${API_HOST}/${announcement}`, {
             method: 'DELETE'
         })
         if (res.ok) {

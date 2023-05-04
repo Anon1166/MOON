@@ -49,6 +49,7 @@ public class AnnouncesService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoriesCategoryId() + "does not exist !!!"));
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
+//        Announces entity = new Announces()
         return announcesRepository.saveAndFlush(announcement);
     }
 
@@ -71,6 +72,8 @@ public class AnnouncesService {
     public void deleteAnnouncement(Integer announcementId){
         Announces b = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new RuntimeException("can not find id !!!"));
+
+
         announcesRepository.delete(b);
 
     }

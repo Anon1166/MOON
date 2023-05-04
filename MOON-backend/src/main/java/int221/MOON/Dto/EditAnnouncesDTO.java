@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 @Setter
 public class EditAnnouncesDTO {
 
+
         private Integer id;
         private String announcementTitle;
         private String announcementDescription;

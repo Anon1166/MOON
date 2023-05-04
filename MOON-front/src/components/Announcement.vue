@@ -1,5 +1,5 @@
 <script setup>
-import { announcement, fetchAnnouncement, changeTime } from '../assets/data-manager.js'
+import { announcement, fetchAnnouncement, changeTime, deleteAnnoumcementById } from '../assets/data-manager.js'
 import { onBeforeMount } from 'vue';
 
 
@@ -7,6 +7,8 @@ onBeforeMount(async () => {
   await fetchAnnouncement()
 })
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+console.log(announcement.value);
+
 
 
 </script>
@@ -55,7 +57,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
                   <button class="btn-success btn-sm rounded-md bg-green-200 font-bold ">view</button>
                 </router-link>
-                <button class="btn-success btn-sm rounded-md bg-red-400 font-bold ">delete</button>
+                <button @click="deleteAnnoumcementById(item.id)" class="btn-success btn-sm rounded-md bg-red-400 font-bold ">delete</button>
               </td>
             </tr>
           </tbody>
