@@ -92,7 +92,7 @@ const submit = async () => {
             router.go(-1)
         } else {
             addAnnouncement(createAnn.value)
-            router.push({ name: 'Home' })
+            router.push({ name: 'Home'})
         }
 
     }
