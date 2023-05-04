@@ -20,7 +20,7 @@ onBeforeMount(async () => {
         await announcementById(props.param)
         data1.value = announcementDetail.value
         console.log(data1.value);
-        const c = categories.value.filter((a) => a.categoryName === announcementDetail.value.announcementCategory)
+        const c = categories.value.filter((a) => a.categoryName === data1.value.announcementCategory)
         const pubdate = new Date(announcementDetail.value.publishDate)
         const closedate = new Date(announcementDetail.value.closeDate)
         createAnn.value.announcementTitle = announcementDetail.value.announcementTitle
@@ -69,17 +69,27 @@ const formatDateTime = (date, time) => {
         return format.toISOString()
     }
 }
-
 const check = () => {
-    console.log(data1.value.announcementTitle);
-    console.log(createAnn.value.announcementTitle);
-    if(
-        data1.value.announcementCategory === createAnn.value.announcementCategory 
-    ){
-        return  true
-    }else{
+    const c = categories.value.filter((a) => a.categoryName === data1.value.announcementCategory)
+    const a = display.value ? 'Y' : 'N'
+    const timepub = new Date(formatDateTime(publishDate.value, publishtime.value)).getTime()
+    const timepub1 = new Date(data1.value.publishDate).getTime()
+    const timeclo = new Date(formatDateTime(closeDate.value, closetime.value)).getTime()
+    const timeclo1 = new Date(data1.value.closeDate).getTime()
+
+    if (
+        data1.value.announcementTitle !== createAnn.value.announcementTitle ||
+        data1.value.announcementDescription !== createAnn.value.announcementDescription ||
+        c[0].categoryId !== createAnn.value.categoriesCategoryId ||
+        data1.value.announcementDisplay !== a ||
+        timepub !== timepub1 ||
+        timeclo !== timeclo1
+    ) {
         return false
+    } else {
+        return true
     }
+
 }
 
 const submit = async () => {
@@ -92,12 +102,11 @@ const submit = async () => {
             router.go(-1)
         } else {
             addAnnouncement(createAnn.value)
-            router.push({ name: 'Home'})
+            router.push({ name: 'Home' })
         }
 
     }
 }
-
 
 </script>
 <template>
