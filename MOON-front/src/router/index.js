@@ -4,7 +4,7 @@ import Announcement from '../components/Announcement.vue'
 import AnnouncementView from '../components/AnnouncementView.vue'
 import PageNotfound from '../components/PageNotfound.vue'
 import AnnouncementCreate from '../components/AnnouncementCreate.vue'
-
+import AnnouncementEdit from '../components/AnnouncementEdit.vue'
 
 const history = createWebHistory()
 const routes = [
@@ -27,6 +27,11 @@ const routes = [
         path: '/admin/announcement/add',
         name: 'AddAnnouncement',
         component: AnnouncementCreate
+    },
+    {
+        path: '/admin/announcement/:id/edit',
+        name: 'AddAnnouncementEdit',
+        component: AnnouncementEdit
     }
 ]
 const router = createRouter({ history, routes })

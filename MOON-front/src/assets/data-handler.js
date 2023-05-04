@@ -1,4 +1,5 @@
-const API_HOST = import.meta.env.VITE_BASE_URL
+const API_HOST = import.meta.env.VITE_BASE_URL + "/api/announcements"
+const API_CATEGORY = import.meta.env.VITE_BASE_URL + "/api/categories"
 
 async function getAnnounment() {
     try {
@@ -6,6 +7,32 @@ async function getAnnounment() {
         if (res.ok) {
             const announment = res.json()
             return announment
+        }
+        else throw new Error('Error, data is error!')
+    } catch (error) {
+        
+    }
+}
+
+async function getCategories() {
+    try {
+        const res = await fetch(`${API_CATEGORY}`)
+        if (res.ok) {
+            const categories = res.json()
+            return categories
+        }
+        else throw new Error('Error, data is error!')
+    } catch (error) {
+        
+    }
+}
+
+async function getCategoriesById(id) {
+    try {
+        const res = await fetch(`${API_CATEGORY}/${id}`)
+        if (res.ok) {
+            const categories = res.json()
+            return categories
         }
         else throw new Error('Error, data is error!')
     } catch (error) {
@@ -42,9 +69,9 @@ async function cerateAnnouncement(announcement) {
     }
 }
 
-async function updateAnnouncement(announcement){
+async function updateAnnouncement(announcement, id){
     try {
-        const res = await fetch(`${API_HOST}/${playerData.id}`, {
+        const res = await fetch(`${API_HOST}/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -73,4 +100,4 @@ async function deleteAnnoumcement(announcement){
 } 
 
 
-export { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement}
+export { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById}

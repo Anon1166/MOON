@@ -7,7 +7,6 @@ onBeforeMount(async () => {
   await fetchAnnouncement()
 })
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-console.log(announcement.value);
 
 
 
@@ -29,7 +28,7 @@ console.log(announcement.value);
         </router-link>
       </div>
       <div class="flex justify-center">
-        <table class="table w-full ">
+        <table class="table w-full  ">
           <thead>
             <tr>
               <th class="hidden sm:table-cell">#</th>

@@ -1,0 +1,43 @@
+// if (props.data) {
+// console.log(props.data.publishDate)
+// const time = changeTime(props.data.publishDate)
+// console.log(time);
+
+// const arr = time.split(",")
+// console.log(arr[0].trim())
+// console.log(arr[1].trim())
+
+// publishDate.value = arr[0].trim().toLocaleDateString("en-GB")
+// publishtime.value = arr[1].trim()
+// console.log(publishDate.value)
+
+
+// for (const key in props.data) {
+    // if (key === "publishDate") {
+    //     publishDate.value = arr[0].trim()
+    //     publishtime.value = arr[1].trim()
+    // } else if (key === "closeDate") {
+    //     closeDate.value = arr[0].trim()
+    //     closetime.value = arr[1].trim()
+    // } else if (key === "announcementCategory") continue
+    // else {
+    //     createAnn.value[key] = props.data[key]
+    // }
+    
+    // }
+
+// }
+
+
+if ( createAnn.value.announcementTitle !== announcementDetail.value.announcementTitle ||
+    createAnn.value.announcementDescription !== announcementDetail.value.announcementDescription ||
+    publishDate.value !== changeDate(pubdate) ||
+    publishtime.value !== changeTime(pubdate) ||
+    closeDate.value !== changeDate(closedate) ||
+    closetime.value !== changeTime(closedate) ||
+    display.value !== announcementDetail.value.announcementDisplay === "Y" ? true : false ||
+    createAnn.value.categoriesCategoryId !== c[0].categoryId
+) 
+{
+
+}

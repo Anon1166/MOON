@@ -1,15 +1,16 @@
-import { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement } from "./data-handler.js"
+import { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById } from "./data-handler.js"
 import { ref } from 'vue'
 
 const announcement = ref([])
 const announcementDetail = ref("")
+const categories = ref([])
+const categoriesDetail = ref("")
 
+
+//Announcement
 const fetchAnnouncement = async () => {
   announcement.value = await getAnnounment()
-  
 }
-
-
 
 const announcementById = async (id) => {
   announcementDetail.value = await getAnnounmentById(id)
@@ -30,9 +31,22 @@ const changeTime = (date) => {
 const deleteAnnoumcementById = async (annId) => {
   await deleteAnnoumcement(annId)
   await fetchAnnouncement()  
+}
 
+const updateAnnouncementbyId = async (ann ,annId) => {
+  await updateAnnouncement(ann, annId)
+  await fetchAnnouncement()
 }
 
 
+// Category
+const fetchCategory = async () => {
+  categories.value = await getCategories()
+}
 
-export { announcement, fetchAnnouncement, announcementDetail, announcementById, addAnnouncement, changeTime ,deleteAnnoumcementById}
+const categoryById =  async (id) => {
+  categoriesDetail.value = await getCategoriesById(id)
+}
+
+export { announcement, fetchAnnouncement, announcementDetail, announcementById, addAnnouncement, changeTime ,deleteAnnoumcementById,
+   fetchCategory, categories, categoryById, categoriesDetail, updateAnnouncementbyId}

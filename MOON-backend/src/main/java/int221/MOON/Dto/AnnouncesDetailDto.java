@@ -17,6 +17,8 @@ public class AnnouncesDetailDto {
     private String announcementTitle;
     @JsonIgnore
     private String categoriesCategoryName;
+    @JsonIgnore
+    private String categoriesCategoryId;
     public String getAnnouncementCategory(){return categoriesCategoryName;}
     private String announcementDescription;
     private ZonedDateTime publishDate;
