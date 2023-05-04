@@ -1,14 +1,17 @@
 <script setup>
 import { addAnnouncement } from '../assets/data-manager.js'
-import { announcementDetail, announcementById, fetchCategory, categories, categoryById, categoriesDetail, updateAnnouncementbyId } from '../assets/data-manager';
-import { ref, computed } from 'vue';
+import { announcementDetail, announcementById, fetchCategory, categories, updateAnnouncementbyId } from '../assets/data-manager';
+import { ref } from 'vue';
 import { onBeforeMount } from 'vue';
 import router from '../router/index.js';
+
 const data1 = ref({})
-
-
-
 const props = defineProps(["param", "id"])
+const publishDate = ref(null)
+const publishtime = ref(null)
+const closeDate = ref(null)
+const closetime = ref(null)
+const display = ref(false)
 
 
 onBeforeMount(async () => {
@@ -31,9 +34,6 @@ onBeforeMount(async () => {
 
     }
 })
-
-
-
 
 const changeDate = (date) => {
     if (date.getFullYear() > 1970) {
@@ -63,12 +63,6 @@ const createAnn = ref({
     categoriesCategoryId: 1
 })
 
-const publishDate = ref(null)
-const publishtime = ref(null)
-const closeDate = ref(null)
-const closetime = ref(null)
-const display = ref(false)
-
 const formatDateTime = (date, time) => {
     if (date && time) {
         const format = new Date(date + " " + time)
@@ -76,7 +70,17 @@ const formatDateTime = (date, time) => {
     }
 }
 
-
+const check = () => {
+    console.log(data1.value.announcementTitle);
+    console.log(createAnn.value.announcementTitle);
+    if(
+        data1.value.announcementCategory === createAnn.value.announcementCategory 
+    ){
+        return  true
+    }else{
+        return false
+    }
+}
 
 const submit = async () => {
     if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "") {
@@ -93,32 +97,6 @@ const submit = async () => {
 
     }
 }
-
-
-// if (props.id === "edit") {
-//     const pdate = new Date(announcementDetail.value.publishDate)
-//     const cdate = new Date(announcementDetail.value.closeDate)
-
-//     const isDisabled = computed(() => {
-//     if (createAnn.value.announcementTitle === announcementDetail.value.announcementTitle &&
-//         createAnn.value.announcementDescription === announcementDetail.value.announcementDescription &&
-//         publishDate.value === changeDate(pdate) &&
-//         publishtime.value === changeTime(pdate) &&
-//         closeDate.value === changeDate(cdate) &&
-//         closetime.value === changeTime(cdate) &&
-//         display.value === announcementDetail.value.announcementDisplay === "Y" ? true : false &&
-//         createAnn.value.categoriesCategoryId === c[0].categoryId
-//     ) {
-//         console.log("true")
-//         dis.value = true
-//     } else {
-//         console.log("false")
-//         dis.value = false
-//     }
-// })
-
-// isDisabled
-// }
 
 
 </script>
@@ -208,7 +186,7 @@ const submit = async () => {
                                     to
                                     show this announcement</label>
                             </div>
-                            <button type="submit"
+                            <button type="submit" :disabled="check()"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                         </form>
                         <button @click="$router.go(-1)"

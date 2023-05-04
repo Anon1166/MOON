@@ -29,15 +29,41 @@
 // }
 
 
-if ( createAnn.value.announcementTitle !== announcementDetail.value.announcementTitle ||
-    createAnn.value.announcementDescription !== announcementDetail.value.announcementDescription ||
-    publishDate.value !== changeDate(pubdate) ||
-    publishtime.value !== changeTime(pubdate) ||
-    closeDate.value !== changeDate(closedate) ||
-    closetime.value !== changeTime(closedate) ||
-    display.value !== announcementDetail.value.announcementDisplay === "Y" ? true : false ||
-    createAnn.value.categoriesCategoryId !== c[0].categoryId
-) 
-{
+// if ( createAnn.value.announcementTitle !== announcementDetail.value.announcementTitle ||
+//     createAnn.value.announcementDescription !== announcementDetail.value.announcementDescription ||
+//     publishDate.value !== changeDate(pubdate) ||
+//     publishtime.value !== changeTime(pubdate) ||
+//     closeDate.value !== changeDate(closedate) ||
+//     closetime.value !== changeTime(closedate) ||
+//     display.value !== announcementDetail.value.announcementDisplay === "Y" ? true : false ||
+//     createAnn.value.categoriesCategoryId !== c[0].categoryId
+// ) 
+// {
 
-}
+// }
+
+
+// if (props.id === "edit") {
+//     const pdate = new Date(announcementDetail.value.publishDate)
+//     const cdate = new Date(announcementDetail.value.closeDate)
+
+//     const isDisabled = computed(() => {
+//     if (createAnn.value.announcementTitle === announcementDetail.value.announcementTitle &&
+//         createAnn.value.announcementDescription === announcementDetail.value.announcementDescription &&
+//         publishDate.value === changeDate(pdate) &&
+//         publishtime.value === changeTime(pdate) &&
+//         closeDate.value === changeDate(cdate) &&
+//         closetime.value === changeTime(cdate) &&
+//         display.value === announcementDetail.value.announcementDisplay === "Y" ? true : false &&
+//         createAnn.value.categoriesCategoryId === c[0].categoryId
+//     ) {
+//         console.log("true")
+//         dis.value = true
+//     } else {
+//         console.log("false")
+//         dis.value = false
+//     }
+// })
+
+// isDisabled
+// }
