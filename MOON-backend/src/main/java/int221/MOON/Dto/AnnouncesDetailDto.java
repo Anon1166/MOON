@@ -16,10 +16,10 @@ public class AnnouncesDetailDto {
     private Integer id;
     private String announcementTitle;
     @JsonIgnore
-    private String categoriesCategoryName;
+    private String categoriesAnnouncementCategory;
     @JsonIgnore
     private String categoriesCategoryId;
-    public String getAnnouncementCategory(){return categoriesCategoryName;}
+    public String getAnnouncementCategory(){return categoriesAnnouncementCategory;}
     private String announcementDescription;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;

@@ -19,10 +19,7 @@ onBeforeMount(async () => {
     if (props.id === "edit") {
         await announcementById(props.param)
         data1.value = announcementDetail.value
-        console.log(data1.value);
-        console.log(categories.value[0].announcementCategory);
         const c = categories.value.filter((a) => a.announcementCategory === announcementDetail.value.announcementCategory)
-        console.log(announcementDetail.value.announcementCategory);
         const pubdate = new Date(announcementDetail.value.publishDate)
         const closedate = new Date(announcementDetail.value.closeDate)
         createAnn.value.announcementTitle = announcementDetail.value.announcementTitle
