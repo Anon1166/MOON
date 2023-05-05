@@ -30,7 +30,6 @@ onBeforeMount(async () => {
         closetime.value = changeTime(closedate)
         display.value = announcementDetail.value.announcementDisplay === "Y" ? true : false
         createAnn.value.categoryId = c[0].categoryId
-
     }
 })
 
@@ -68,22 +67,28 @@ const formatDateTime = (date, time) => {
         return format.toISOString()
     }
 }
+const checktime = (a) => {
+    if(!a){
+        return 0
+    }else{
+        return a
+    }
+}
 
 const check = () => {
-    const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)
+    const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)[0]?.categoryId
     const a = display.value ? 'Y' : 'N'
     const timepub = new Date(formatDateTime(publishDate.value, publishtime.value)).getTime()
     const timepub1 = new Date(data1.value.publishDate).getTime()
     const timeclo = new Date(formatDateTime(closeDate.value, closetime.value)).getTime()
     const timeclo1 = new Date(data1.value.closeDate).getTime()
-
     if (
         data1.value.announcementTitle !== createAnn.value.announcementTitle ||
         data1.value.announcementDescription !== createAnn.value.announcementDescription ||
-        c[0].categoryId !== createAnn.value.categoryId ||
+        c !== createAnn.value.categoryId ||
         data1.value.announcementDisplay !== a ||
-        timepub !== timepub1 ||
-        timeclo !== timeclo1
+        checktime(timepub) !== timepub1 ||
+        checktime(timeclo) !== timeclo1 
     ) {
         return false
     } else {
