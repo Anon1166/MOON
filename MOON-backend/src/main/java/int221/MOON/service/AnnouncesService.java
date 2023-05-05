@@ -1,8 +1,6 @@
 package int221.MOON.service;
 
-import int221.MOON.Dto.AnnouncesDetailDto;
-import int221.MOON.Dto.AnnouncesDto;
-import int221.MOON.Dto.EditAnnouncesDTO;
+import int221.MOON.Dto.*;
 import int221.MOON.ListMapper;
 import int221.MOON.entities.Announces;
 import int221.MOON.entities.Categories;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnnouncesService {
@@ -44,19 +41,20 @@ public class AnnouncesService {
     }
 
 
-    public  Announces createAnnouncement(EditAnnouncesDTO announces) {
-        Categories category = categoriesRepository.findById(announces.getCategoriesCategoryId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoriesCategoryId() + "does not exist !!!"));
+    public EditAnnDto createAnnouncement(InputAnnouncesDTO announces) {
+        Categories category = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
 //        Announces entity = new Announces()
-        return announcesRepository.saveAndFlush(announcement);
+        announcesRepository.saveAndFlush(announcement);
+        return modelMapper.map(announcement, EditAnnDto.class);
     }
 
 
-    public  Announces updateAnnouncement(EditAnnouncesDTO announces, Integer announcementId){
-        Categories categories = categoriesRepository.findById(announces.getCategoriesCategoryId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoriesCategoryId() + "does not exist !!!"));
+    public UpdateDto updateAnnouncement(InputAnnouncesDTO announces, Integer announcementId){
+        Categories categories = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
         Announces announcement = modelMapper.map(announces, Announces.class);
         Announces a = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new RuntimeException("can not find id !!!"));
@@ -66,12 +64,13 @@ public class AnnouncesService {
         a.setCloseDate(announcement.getCloseDate());
         a.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         a.setCategories(categories);
-        return  announcesRepository.saveAndFlush(a);
+        announcesRepository.saveAndFlush(a);
+        return modelMapper.map(a, UpdateDto.class);
     }
 
     public void deleteAnnouncement(Integer announcementId){
         Announces b = announcesRepository.findById(announcementId).orElseThrow(
-                () -> new RuntimeException("can not find id !!!"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "announcement id " + announcementId + "does not exist !!!"));
 
 
         announcesRepository.delete(b);

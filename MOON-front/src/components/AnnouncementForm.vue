@@ -30,7 +30,7 @@ onBeforeMount(async () => {
         closeDate.value = changeDate(closedate)
         closetime.value = changeTime(closedate)
         display.value = announcementDetail.value.announcementDisplay === "Y" ? true : false
-        createAnn.value.categoriesCategoryId = c[0].categoryId
+        createAnn.value.categoryId = c[0].categoryId
 
     }
 })
@@ -60,7 +60,7 @@ const createAnn = ref({
     closeDate: "",
     announcementDescription: "",
     announcementDisplay: "",
-    categoriesCategoryId: 1
+    categoryId: 1
 })
 
 const formatDateTime = (date, time) => {
@@ -80,7 +80,7 @@ const check = () => {
     if (
         data1.value.announcementTitle !== createAnn.value.announcementTitle ||
         data1.value.announcementDescription !== createAnn.value.announcementDescription ||
-        c[0].categoryId !== createAnn.value.categoriesCategoryId ||
+        c[0].categoryId !== createAnn.value.categoryId ||
         data1.value.announcementDisplay !== a ||
         timepub !== timepub1 ||
         timeclo !== timeclo1
@@ -128,7 +128,7 @@ const submit = async () => {
                             <div class="mb-6 flex relative space-x-4 ">
                                 <label class="text-sm font-medium text-gray-900 dark:text-white"
                                     for="category">Category</label>
-                                <select v-model=createAnn.categoriesCategoryId class="rounded-lg border p-2"
+                                <select v-model=createAnn.categoryId class="rounded-lg border p-2"
                                     name="category">
                                     <option v-for="category in categories " :key="category.categoryId"
                                         :value="category.categoryId">{{ category.categoryName }}</option>

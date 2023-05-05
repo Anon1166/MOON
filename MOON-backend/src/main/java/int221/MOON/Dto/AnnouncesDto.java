@@ -15,8 +15,8 @@ public class AnnouncesDto {
     private Integer id;
     private String announcementTitle;
     @JsonIgnore
-    private String categoriesCategoryName;
-    public String getAnnouncementCategory(){return categoriesCategoryName;}
+    private String categoriesAnnouncementCategory;
+    public String getAnnouncementCategory(){return categoriesAnnouncementCategory;}
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
     @Enumerated(EnumType.STRING)

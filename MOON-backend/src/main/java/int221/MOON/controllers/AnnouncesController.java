@@ -1,15 +1,10 @@
 package int221.MOON.controllers;
 
-import int221.MOON.Dto.AnnouncesDetailDto;
-import int221.MOON.Dto.AnnouncesDto;
-import int221.MOON.Dto.EditAnnouncesDTO;
+import int221.MOON.Dto.*;
 import int221.MOON.entities.Announces;
 import int221.MOON.service.AnnouncesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 @CrossOrigin
@@ -31,13 +26,13 @@ public class AnnouncesController {
     }
 
     @CrossOrigin
-    @PostMapping("/add")
-    public Announces createAnnouncement(@RequestBody EditAnnouncesDTO announces){
+    @PostMapping("")
+    public EditAnnDto createAnnouncement(@RequestBody InputAnnouncesDTO announces){
         return  announcesService.createAnnouncement(announces);
     }
     @CrossOrigin
     @PutMapping("/{announcementId}")
-    public Announces updateAnnouncement(@PathVariable Integer announcementId , @RequestBody EditAnnouncesDTO announces){
+    public UpdateDto updateAnnouncement(@PathVariable Integer announcementId , @RequestBody InputAnnouncesDTO announces){
         return  announcesService.updateAnnouncement(announces,announcementId);
     }
     @CrossOrigin

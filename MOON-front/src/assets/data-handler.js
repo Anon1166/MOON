@@ -55,7 +55,7 @@ async function getAnnounmentById(id) {
 
 async function cerateAnnouncement(announcement) {
     try {
-        const res = await fetch(`${API_HOST}/add`, {
+        const res = await fetch(`${API_HOST}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

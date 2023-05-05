@@ -13,7 +13,7 @@ public class Categories {
     @Column(name="categoryId")
     private Integer categoryId ;
     @Column(name="categoryName")
-    private String categoryName ;
+    private String announcementCategory ;
 
 
 }
