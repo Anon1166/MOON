@@ -1,5 +1,5 @@
-const API_HOST = import.meta.env.VITE_BASE_URL + "/api/announcements"
-const API_CATEGORY = import.meta.env.VITE_BASE_URL + "/api/categories"
+const API_HOST = import.meta.env.VITE_ROOT_API + "/api/announcements"
+const API_CATEGORY = import.meta.env.VITE_ROOT_API + "/api/categories"
 
 async function getAnnounment() {
     try {

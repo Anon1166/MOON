@@ -6,7 +6,7 @@ import PageNotfound from '../components/PageNotfound.vue'
 import AnnouncementCreate from '../components/AnnouncementCreate.vue'
 import AnnouncementEdit from '../components/AnnouncementEdit.vue'
 
-const history = createWebHistory()
+const history = createWebHistory(import.meta.env.BASE_URL)
 const routes = [
     {
         path: '/admin/announcement',
