@@ -20,7 +20,9 @@ onBeforeMount(async () => {
         await announcementById(props.param)
         data1.value = announcementDetail.value
         console.log(data1.value);
-        const c = categories.value.filter((a) => a.categoryName === data1.value.announcementCategory)
+        console.log(categories.value[0].announcementCategory);
+        const c = categories.value.filter((a) => a.announcementCategory === announcementDetail.value.announcementCategory)
+        console.log(announcementDetail.value.announcementCategory);
         const pubdate = new Date(announcementDetail.value.publishDate)
         const closedate = new Date(announcementDetail.value.closeDate)
         createAnn.value.announcementTitle = announcementDetail.value.announcementTitle
@@ -70,7 +72,7 @@ const formatDateTime = (date, time) => {
     }
 }
 const check = () => {
-    const c = categories.value.filter((a) => a.categoryName === data1.value.announcementCategory)
+    const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)
     const a = display.value ? 'Y' : 'N'
     const timepub = new Date(formatDateTime(publishDate.value, publishtime.value)).getTime()
     const timepub1 = new Date(data1.value.publishDate).getTime()
@@ -131,7 +133,7 @@ const submit = async () => {
                                 <select v-model=createAnn.categoryId class="rounded-lg border p-2"
                                     name="category">
                                     <option v-for="category in categories " :key="category.categoryId"
-                                        :value="category.categoryId">{{ category.categoryName }}</option>
+                                        :value="category.categoryId">{{ category.announcementCategory }}</option>
                                 </select>
                             </div>
                             <div class="mb-6 flex space-x-2">
