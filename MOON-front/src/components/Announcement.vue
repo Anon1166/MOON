@@ -1,6 +1,6 @@
 <script setup>
 import { announcement, fetchAnnouncement, changeTime, deleteAnnoumcementById } from '../assets/data-manager.js'
-import { onBeforeMount , ref} from 'vue';
+import { onBeforeMount , ref, computed} from 'vue';
 
 
 
@@ -9,6 +9,13 @@ onBeforeMount(async () => {
 })
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const getId = ref("")
+
+const searchKeyword = ref('')
+const filterAnn = computed(() => {
+    return announcement.value.filter((ann) =>
+    ann.announcementTitle?.toLowerCase().includes(searchKeyword.value.toLowerCase())
+    ).sort((a, b) => b.level - a.level)
+})
 
 </script>
  
@@ -22,13 +29,14 @@ const getId = ref("")
         <div class="font-bold mb-2 sm:mb-0 sm:mr-2">Date/Time show in Timezone:</div>
         <div class="text-center">{{ timezone }}</div>
       </div>
-      <div class="ann-button flex justify-end mb-2">
+      <div class="ann-button flex justify-between mb-2">
+        <input type="text" placeholder="search title"  class="input input-bordered w-full max-w-xs" v-model="searchKeyword" />
         <router-link :to="{ name: 'AddAnnouncement' }">
           <button class="btn-success btn-sm rounded-md bg-green-300 font-bold mb-2">Add Announcement</button>
         </router-link>
       </div>
-      <div class="flex justify-center">
-        <table class="table w-full  ">
+      <div class="flex justify-center ">
+        <table class="table w-full h-full overflow-scroll ">
           <thead>
             <tr>
               <th class="hidden sm:table-cell">#</th>
@@ -41,7 +49,7 @@ const getId = ref("")
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in announcement " :key="index" class="ann-item">
+            <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
               <td class="truncate ann-title">{{ item.announcementTitle }}</td>
               <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>

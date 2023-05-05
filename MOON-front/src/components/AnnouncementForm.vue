@@ -68,6 +68,7 @@ const formatDateTime = (date, time) => {
         return format.toISOString()
     }
 }
+
 const check = () => {
     const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)
     const a = display.value ? 'Y' : 'N'
