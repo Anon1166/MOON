@@ -6,3 +6,16 @@ services:
       dockerfile: frontDockerfile
     ports:
       - "80:80"
+  back:
+    image: backimg:1.00
+    build:
+      context: .
+      dockerfile: backDockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my-net
+
+networks:
+  my-net:
+    external: true
