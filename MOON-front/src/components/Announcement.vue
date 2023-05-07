@@ -17,6 +17,8 @@ const filterAnn = computed(() => {
     ).sort((a, b) => b.level - a.level)
 })
 
+
+
 </script>
  
 <template>
@@ -32,7 +34,7 @@ const filterAnn = computed(() => {
       <div class="ann-button flex justify-between mb-2">
         <input type="text" placeholder="search title"  class="input input-bordered w-full max-w-xs" v-model="searchKeyword" />
         <router-link :to="{ name: 'AddAnnouncement' }">
-          <button class="btn-success btn-sm rounded-md bg-green-300 font-bold mb-2">Add Announcement</button>
+          <button class="ann-button btn-success btn-sm rounded-md bg-green-300 font-bold mb-2">Add Announcement</button>
         </router-link>
       </div>
       <div class="flex justify-center ">
@@ -51,7 +53,7 @@ const filterAnn = computed(() => {
           <tbody>
             <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
-              <td class="truncate ann-title">{{ item.announcementTitle }}</td>
+              <td class="truncate ann-title text">{{ item.announcementTitle}}</td>
               <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>
               <td v-if="item.publishDate !== null" class="hidden sm:table-cell ann-publish-date">{{
                 changeTime(item.publishDate) }}</td>
@@ -64,7 +66,7 @@ const filterAnn = computed(() => {
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
                   <button class="btn-success w-20 btn-sm rounded-md bg-green-200 font-bold ">view</button>
                 </router-link>
-                <button @click="getId = item.id" class="btn-success w-20 btn-sm rounded-md bg-red-400 font-bold"><label
+                <button @click="getId = item.id" class="ann-button btn-success w-20 btn-sm rounded-md bg-red-400 font-bold"><label
                     for="modal">delete</label></button>
               </td>
             </tr>
@@ -89,4 +91,14 @@ const filterAnn = computed(() => {
   </div>
 </template>
  
-<style scoped></style>
+<style scoped>
+
+.text {
+  display: block;
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+</style>
