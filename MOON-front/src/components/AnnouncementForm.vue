@@ -104,10 +104,10 @@ const submit = async () => {
         createAnn.value.closeDate = formatDateTime(closeDate.value, closetime.value)
         createAnn.value.announcementDisplay = display.value ? "Y" : "N"
         if (props.id === "edit") {
-            updateAnnouncementbyId(createAnn.value, props.param)
+            await updateAnnouncementbyId(createAnn.value, props.param)
             router.go(-1)
         } else {
-            addAnnouncement(createAnn.value)
+            await addAnnouncement(createAnn.value)
             router.push({ name: 'Home' })
         }
 

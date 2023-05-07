@@ -22,7 +22,7 @@ const filterAnn = computed(() => {
 </script>
  
 <template>
-  <div class="w-screen h-screen bg-cover flex flex-col  items-center">
+  <div class="w-full h-full bg-cover flex flex-col  items-center">
     <div class="w-full max-w-screen-xl">
       <div class="p-5 mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
