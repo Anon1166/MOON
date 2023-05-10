@@ -38,7 +38,7 @@ const filterAnn = computed(() => {
         </router-link>
       </div>
       <div class="flex justify-center ">
-        <table class="table w-full h-full overflow-scroll ">
+        <table class="table w-full h-full  ">
           <thead>
             <tr>
               <th class="hidden sm:table-cell">#</th>
@@ -50,8 +50,9 @@ const filterAnn = computed(() => {
               <th class="text-center">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item">
+          
+          <tbody class="overflow-scroll">
+            <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item  ">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
               <td class="truncate ann-title text">{{ item.announcementTitle}}</td>
               <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>

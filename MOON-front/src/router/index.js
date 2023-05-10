@@ -5,9 +5,15 @@ import AnnouncementView from '../components/AnnouncementView.vue'
 import PageNotfound from '../components/PageNotfound.vue'
 import AnnouncementCreate from '../components/AnnouncementCreate.vue'
 import AnnouncementEdit from '../components/AnnouncementEdit.vue'
+import ActiveAnnouncement from '../components/ActiveAnnouncement.vue'
 
 const history = createWebHistory(import.meta.env.BASE_URL)
 const routes = [
+    {
+        path: '/announcement',
+        name: 'User',
+        component: ActiveAnnouncement
+    },
     {
         path: '/admin/announcement',
         name: 'Home',
