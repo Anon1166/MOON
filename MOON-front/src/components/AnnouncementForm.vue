@@ -24,12 +24,16 @@ onBeforeMount(async () => {
         const closedate = new Date(announcementDetail.value.closeDate)
         createAnn.value.announcementTitle = announcementDetail.value.announcementTitle
         createAnn.value.announcementDescription = announcementDetail.value.announcementDescription
+        
         publishDate.value = changeDate(pubdate)
+        
         publishtime.value = changeTime(pubdate)
         closeDate.value = changeDate(closedate)
         closetime.value = changeTime(closedate)
         display.value = announcementDetail.value.announcementDisplay === "Y" ? true : false
         createAnn.value.categoryId = c[0].categoryId
+
+  
 
     }
 })
@@ -110,9 +114,9 @@ const submit = async () => {
 
 </script>
 <template>
-    <div class="w-full h-full ">
-        <div>
-            <h3 class="text-center font-bold text-3xl m-3 text-blue-700 ">Announcement Detail</h3>
+    <div class="w-screen h-screen ">
+        
+            <h3 class="text-center font-bold text-3xl text-blue-700 ">Announcement Detail</h3>
             <div class="flex justify-center">
                 <!-- from -->
                 <div class=" w-full max-w-2xl p-5 m-5 border rounded-lg shadow-lg">
@@ -203,7 +207,7 @@ const submit = async () => {
                     </div>
                 </div>
             </div>
-        </div>
+        
     </div>
 </template>
  

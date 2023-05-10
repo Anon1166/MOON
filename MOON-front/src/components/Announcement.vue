@@ -17,10 +17,12 @@ const filterAnn = computed(() => {
     ).sort((a, b) => b.level - a.level)
 })
 
+
+
 </script>
  
 <template>
-  <div class="w-screen h-screen bg-cover flex flex-col  items-center">
+  <div class="w-full h-full bg-cover flex flex-col  items-center">
     <div class="w-full max-w-screen-xl">
       <div class="p-5 mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
@@ -36,7 +38,7 @@ const filterAnn = computed(() => {
         </router-link>
       </div>
       <div class="flex justify-center ">
-        <table class="table w-full h-full overflow-scroll ">
+        <table class="table w-full h-full  ">
           <thead>
             <tr>
               <th class="hidden sm:table-cell">#</th>
@@ -48,8 +50,9 @@ const filterAnn = computed(() => {
               <th class="text-center">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item">
+          
+          <tbody class="overflow-scroll">
+            <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item  ">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
               <td class="truncate ann-title">{{ item.announcementTitle }}</td>
               <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>
@@ -89,4 +92,8 @@ const filterAnn = computed(() => {
   </div>
 </template>
  
-<style scoped></style>
+<style scoped>
+  table {
+  overflow-x: auto;
+}
+</style>
