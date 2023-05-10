@@ -1,5 +1,5 @@
-const API_HOST = import.meta.env.VITE_BASE_URL + "/api/announcements"
-const API_CATEGORY = import.meta.env.VITE_BASE_URL + "/api/categories"
+const API_HOST = import.meta.env.VITE_ROOT_API + "/api/announcements"
+const API_CATEGORY = import.meta.env.VITE_ROOT_API + "/api/categories"
 
 async function getAnnounment() {
     try {
@@ -13,6 +13,21 @@ async function getAnnounment() {
         
     }
 }
+
+async function getMode(mode="active",size=5,page=0) {
+    try {
+        const res = await fetch(`${API_HOST}/?mode=${mode}&size=${size}&page=${page}`)
+        if (res.ok) {
+            const announcement = res.json
+            return announcement
+        }
+        else throw new Error('Error, data is error!')
+    } catch (error) {
+        
+    }
+}
+
+
 
 async function getCategories() {
     try {
@@ -100,4 +115,4 @@ async function deleteAnnoumcement(announcement){
 } 
 
 
-export { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById}
+export { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById , getMode}

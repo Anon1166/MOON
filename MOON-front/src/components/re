@@ -67,3 +67,5 @@
 
 // isDisabled
 // }
+
+// .length > 50? item.announcementTitle.slice(0, 50) + "..." : item.announcementTitle 

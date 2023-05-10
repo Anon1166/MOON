@@ -1,7 +1,7 @@
 <script setup>
 import { addAnnouncement } from '../assets/data-manager.js'
 import { announcementDetail, announcementById, fetchCategory, categories, updateAnnouncementbyId } from '../assets/data-manager';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { onBeforeMount } from 'vue';
 import router from '../router/index.js';
 
@@ -32,9 +32,6 @@ onBeforeMount(async () => {
         closetime.value = changeTime(closedate)
         display.value = announcementDetail.value.announcementDisplay === "Y" ? true : false
         createAnn.value.categoryId = c[0].categoryId
-
-  
-
     }
 })
 
@@ -72,22 +69,28 @@ const formatDateTime = (date, time) => {
         return format.toISOString()
     }
 }
+const checktime = (a) => {
+    if(!a){
+        return 0
+    }else{
+        return a
+    }
+}
 
 const check = () => {
-    const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)
+    const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)[0]?.categoryId
     const a = display.value ? 'Y' : 'N'
     const timepub = new Date(formatDateTime(publishDate.value, publishtime.value)).getTime()
     const timepub1 = new Date(data1.value.publishDate).getTime()
     const timeclo = new Date(formatDateTime(closeDate.value, closetime.value)).getTime()
     const timeclo1 = new Date(data1.value.closeDate).getTime()
-
     if (
         data1.value.announcementTitle !== createAnn.value.announcementTitle ||
         data1.value.announcementDescription !== createAnn.value.announcementDescription ||
-        c[0].categoryId !== createAnn.value.categoryId ||
+        c !== createAnn.value.categoryId ||
         data1.value.announcementDisplay !== a ||
-        timepub !== timepub1 ||
-        timeclo !== timeclo1
+        checktime(timepub) !== timepub1 ||
+        checktime(timeclo) !== timeclo1 
     ) {
         return false
     } else {
@@ -96,16 +99,17 @@ const check = () => {
 
 }
 
+
 const submit = async () => {
     if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "") {
         createAnn.value.publishDate = formatDateTime(publishDate.value, publishtime.value)
         createAnn.value.closeDate = formatDateTime(closeDate.value, closetime.value)
         createAnn.value.announcementDisplay = display.value ? "Y" : "N"
         if (props.id === "edit") {
-            updateAnnouncementbyId(createAnn.value, props.param)
+            await updateAnnouncementbyId(createAnn.value, props.param)
             router.go(-1)
         } else {
-            addAnnouncement(createAnn.value)
+            await addAnnouncement(createAnn.value)
             router.push({ name: 'Home' })
         }
 
@@ -122,17 +126,17 @@ const submit = async () => {
                 <div class=" w-full max-w-2xl p-5 m-5 border rounded-lg shadow-lg">
                     <div class="grid gap-6 mb-6 md:grid-cols-1">
                         <form class="grid gap-6 md:grid-cols-1" @submit.prevent="submit">
-                            <div class="mb-3">
+                            <div class=" mb-3" >
                                 <label for="title"
                                     class="block mb-2 text-sm font-medium text-gray-900  dark:text-white">Title</label>
-                                <input type="text" id="title" v-model="createAnn.announcementTitle"
-                                    class="bg-gray-50 peer  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                <input type="text" id="title" v-model="createAnn.announcementTitle" maxlength="200"
+                                    class="ann-title bg-gray-50 peer  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=" " required>
                             </div>
                             <div class="mb-6 flex relative space-x-4 ">
                                 <label class="text-sm font-medium text-gray-900 dark:text-white"
                                     for="category">Category</label>
-                                <select v-model=createAnn.categoryId class="rounded-lg border p-2"
+                                <select v-model=createAnn.categoryId class="ann-category rounded-lg border p-2"
                                     name="category">
                                     <option v-for="category in categories " :key="category.categoryId"
                                         :value="category.categoryId">{{ category.announcementCategory }}</option>
@@ -141,8 +145,8 @@ const submit = async () => {
                             <div class="mb-6 flex space-x-2">
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                <textarea v-model=createAnn.announcementDescription id="description" rows="4" required
-                                    class="block p-2.5 w-full peer text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                <textarea v-model=createAnn.announcementDescription id="description" rows="4" required maxlength="10000"
+                                    class="ann-description block p-2.5 w-full peer text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Write your thoughts here..."></textarea>
                             </div>
                             <div class="mb-6 flex space-x-3">
@@ -160,12 +164,12 @@ const submit = async () => {
                                         </svg>
                                     </div>
                                     <input type="date" v-model="publishDate"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        class="ann-publish-date bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Select date">
                                 </div>
                                 <div class="relative max-w-sm flex ">
                                     <input type="time" v-model="publishtime"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        class="ann-publish-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
                             </div>
                             <div class="mb-6 flex space-x-3">
@@ -182,28 +186,28 @@ const submit = async () => {
                                         </svg>
                                     </div>
                                     <input type="date" v-model="closeDate"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        class="ann-close-date bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Select date">
                                 </div>
                                 <div class="relative max-w-sm flex ">
                                     <input type="time" v-model="closetime"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        class="ann-close-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
                             </div>
                             <div class="flex items-start mb-6">
                                 <div class="flex items-center h-5">
                                     <input id="check" type="checkbox" v-model="display"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
+                                        class="ann-display w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
                                 </div>
                                 <label for="check" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Check
                                     to
                                     show this announcement</label>
                             </div>
                             <button type="submit" :disabled="check()" :class="check() ? '' : 'hover:bg-blue-800 dark:hover:bg-blue-700'"
-                                class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600  dark:focus:ring-blue-800  disabled:bg-zinc-600 disabled:text-zinc-400 ">Submit</button>
+                                class="ann-button text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600  dark:focus:ring-blue-800  disabled:bg-zinc-600 disabled:text-zinc-400 ">Submit</button>
                         </form>
                         <button @click="$router.go(-1)"
-                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+                            class="ann-button text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
                     </div>
                 </div>
             </div>
