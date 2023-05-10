@@ -1,19 +1,20 @@
-import { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById, getMode } from "./data-handler.js"
+import { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById, getMode} from "./data-handler.js"
 import { ref } from 'vue'
 
 const announcement = ref([])
 const announcementDetail = ref("")
 const categories = ref([])
 const categoriesDetail = ref("")
-const mode = ref([])
+const annMode = ref([])
+const addModeCl = ref([])
 
 //Announcement
 const fetchAnnouncement = async () => {
   announcement.value = await getAnnounment()
 }
 
-const fetchMode = async () => {
-  mode.value = await getMode()
+const fetchMode = async (mode, size, page, category) => {
+  annMode.value = await getMode(mode, size, page, category)
 }
 
 const announcementById = async (id) => {
@@ -53,4 +54,4 @@ const categoryById =  async (id) => {
 }
 
 export { announcement, fetchAnnouncement, announcementDetail, announcementById, addAnnouncement, changeTime ,deleteAnnoumcementById,
-   fetchCategory, categories, categoryById, categoriesDetail, updateAnnouncementbyId , fetchMode}
+   fetchCategory, categories, categoryById, categoriesDetail, updateAnnouncementbyId , fetchMode ,annMode }

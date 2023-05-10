@@ -42,8 +42,9 @@ public class AnnouncesController {
    public PageDTO<AnnouncesDto> getAnnouncesDtoPage(
             @RequestParam(defaultValue = "active") String mode,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "5") Integer size) {
-       return announcesService.getAnnouncementPage(mode, page, size);
+            @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(defaultValue = "0") Integer category) {
+       return announcesService.getAnnouncementPage(mode, page, size, category);
    }
 
 }

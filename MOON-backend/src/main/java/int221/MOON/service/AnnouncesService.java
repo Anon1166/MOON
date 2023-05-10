@@ -9,16 +9,12 @@ import int221.MOON.repository.AnnouncesRepository;
 import int221.MOON.repository.CategoriesRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +24,8 @@ public class AnnouncesService {
     private AnnouncesRepository announcesRepository;
     @Autowired
     private CategoriesRepository categoriesRepository;
+    @Autowired
+    private CategoriesService categoriesService;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -46,25 +44,24 @@ public class AnnouncesService {
         ZonedDateTime nowDate = ZonedDateTime.now();
         m.sort((a, b) -> b.getId() - a.getId());
         if (mode.equals("admin")) {
-            System.out.println("mode : "+mode);
+            System.out.println("mode : " + mode);
             return listMapper.mapList(m, AnnouncesDto.class, modelMapper);
+
         } else if (mode.equals("close")) {
-
-
             List<Announces> list = m.stream()
-                    .filter(a -> a.getAnnouncementDisplay().equals(Enum.Y) &&
-                    a.getCloseDate() == null ||
-                    (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() < nowDate.toEpochSecond()))
+                    .filter(a ->
+                            a.getAnnouncementDisplay().equals(Enum.Y) &&
+                                    (a.getCloseDate() == null ||
+                                            (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() < nowDate.toEpochSecond())))
                     .collect(Collectors.toList());
             return listMapper.mapList(list, AnnouncesDto.class, modelMapper);
 
-
         } else if (mode.equals("active")) {
-            System.out.println("mode : "+mode);
+            System.out.println("mode : " + mode);
 
             List<Announces> list = m.stream()
                     .filter(a -> a.getAnnouncementDisplay().equals(Enum.Y) &&
-                    (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() > nowDate.toEpochSecond()))
+                            (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() > nowDate.toEpochSecond()))
                     .collect(Collectors.toList());
             return listMapper.mapList(list, AnnouncesDto.class, modelMapper);
 
@@ -103,49 +100,27 @@ public class AnnouncesService {
     public void deleteAnnouncement(Integer announcementId) {
         Announces b = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "announcement id " + announcementId + "does not exist !!!"));
-
-
         announcesRepository.delete(b);
-
     }
 
-    public PageDTO<AnnouncesDto> getAnnouncementPage(String mode, int page, int size) {
-        Page<Announces> announcesListPage = announcesRepository.findAll(PageRequest.of(page, size));
-        List<Announces> announcesList = announcesRepository.findAll();
-        announcesList.sort((a, b) -> b.getId() - a.getId());
-        ZonedDateTime nowDate = ZonedDateTime.now();
 
-        System.out.println("mode : "+mode);
-        if (mode.equals("active")) {
-            System.out.println("active----------------");
-            List<Announces> announcesContent = announcesList
-                    .stream()
-                    .filter(a -> a.getAnnouncementDisplay().equals("Y") & a.getCloseDate() == null || (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() > nowDate.toEpochSecond()))
-                    .collect(Collectors.toList());
+    //PAGE
+    public PageDTO<AnnouncesDto> getAnnouncementPage(String mode, int page, int size, int category) {
+        try {
+            List<AnnouncesDto> announcesList = getAnnounces(mode);
+            Categories categories = categoriesService.getIdCategories(category);
             Pageable pageable = PageRequest.of(page, size);
-            int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), announcesContent.size());
-            Page<Announces> announcesPage = new PageImpl<>(announcesContent.subList(start, end), PageRequest.of(page, size), announcesContent.size());
-            return listMapper.toPageDTO(announcesPage, AnnouncesDto.class, modelMapper);
-
-
-        } else if (mode.equals("close")) {
-            System.out.println("close----------------");
-            List<Announces> announcesContent = announcesList
-                    .stream()
-                    .filter(a -> a.getAnnouncementDisplay().equals("Y") & (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() < nowDate.toEpochSecond()))
-                    .collect(Collectors.toList());
-            PageRequest pageRequest = PageRequest.of(page, size);
-            int start = (int) pageRequest.getOffset();
-            int end = Math.min((start + pageRequest.getPageSize()), announcesContent.size());
-            Page<Announces> announcesPage = new PageImpl<>(announcesContent.subList(start, end), PageRequest.of(page, size), announcesContent.size());
-            return listMapper.toPageDTO(announcesPage, AnnouncesDto.class, modelMapper);
-        } else if (mode.equals("admin")) {
-            System.out.println("admin----------------");
-            return listMapper.toPageDTO(announcesListPage, AnnouncesDto.class, modelMapper);
+            if (category == 0) {
+                Page<AnnouncesDto> listPage = listMapper.convertToPage(announcesList, pageable);
+                return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
+            } else {
+                List<AnnouncesDto> announcesStream = announcesList.stream().filter(a -> a.getAnnouncementCategory() == categories.getAnnouncementCategory()).toList();
+                Page<AnnouncesDto> listPage = listMapper.convertToPage(announcesStream, pageable);
+                return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param");
         }
-
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param");
     }
 
 

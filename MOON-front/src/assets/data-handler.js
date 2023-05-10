@@ -14,12 +14,12 @@ async function getAnnounment() {
     }
 }
 
-async function getMode(mode="active",size=5,page=0) {
+async function getMode(mode="active", size=5, page=0, category=0) {
     try {
-        const res = await fetch(`${API_HOST}/?mode=${mode}&size=${size}&page=${page}`)
+        const res = await fetch(`${API_HOST}/pages?mode=${mode}&page=${page}&size=${size}&category${category=0}`)
         if (res.ok) {
-            const announcement = res.json
-            return announcement
+            const announment = res.json()
+            return announment
         }
         else throw new Error('Error, data is error!')
     } catch (error) {
