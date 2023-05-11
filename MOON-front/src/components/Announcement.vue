@@ -25,29 +25,29 @@ const filterAnn = computed(() => {
   <div class="w-full h-full bg-cover flex flex-col  items-center">
     <div class="w-full max-w-screen-xl">
       <div class="p-5 mb-2 mt-6">
-        <h1 class="font-bold text-3xl text-center">SIT Announcement System (SAS)</h1>
+        <h1 class="font-bold text-3xl text-center text-emerald-500">SIT Announcement System (SAS)</h1>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center mb-5">
-        <div class="font-bold mb-2 sm:mb-0 sm:mr-2">Date/Time show in Timezone:</div>
+        <div class="font-bold mb-2 sm:mb-0 sm:mr-2 text-emerald-500">Date/Time show in Timezone:</div>
         <div class="text-center">{{ timezone }}</div>
       </div>
       <div class="ann-button flex justify-between mb-2">
         <input type="text" placeholder="search title"  class="input input-bordered w-full max-w-xs" v-model="searchKeyword" />
         <router-link :to="{ name: 'AddAnnouncement' }">
-          <button class="ann-button btn-success btn-sm rounded-md bg-green-300 font-bold mb-2">Add Announcement</button>
+          <button class="ann-button btn btn-outline btn-success btn-sm rounded-md  font-bold mb-2">Add Announcement</button>
         </router-link>
       </div>
       <div class="flex justify-center ">
-        <table class="table w-full h-full  ">
+        <table class="table w-full h-full shadow-lg ">
           <thead>
             <tr>
-              <th class="hidden sm:table-cell">#</th>
-              <th class="w-1/3">Title</th>
-              <th class="hidden sm:table-cell">Category</th>
-              <th class="hidden sm:table-cell">Publish Date</th>
-              <th class="hidden sm:table-cell">Close Date</th>
-              <th class="text-center">Display</th>
-              <th class="text-center">Action</th>
+              <th class="bg-emerald-400 text-black">#</th>
+              <th class="bg-emerald-400 text-black w-1/3">Title</th>
+              <th class="bg-emerald-400 text-black hidden sm:table-cell">Category</th>
+              <th class="bg-emerald-400 text-black hidden sm:table-cell">Publish Date</th>
+              <th class="bg-emerald-400 text-black hidden sm:table-cell">Close Date</th>
+              <th class="bg-emerald-400 text-black text-center">Display</th>
+              <th class="bg-emerald-400 text-black text-center">Action</th>
             </tr>
           </thead>
           
@@ -65,7 +65,7 @@ const filterAnn = computed(() => {
               <td class="ann-display text-center">{{ item.announcementDisplay }}</td>
               <td class="ann-button space-x-2 flex justify-center">
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
-                  <button class="btn-success w-20 btn-sm rounded-md bg-green-200 font-bold ">view</button>
+                  <button class="btn btn-outline btn-success w-20 btn-sm rounded-md font-bold ">view</button>
                 </router-link>
                 <button @click="getId = item.id" class="ann-button btn-success w-20 btn-sm rounded-md bg-red-400 font-bold"><label
                     for="modal">delete</label></button>

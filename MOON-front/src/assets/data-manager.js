@@ -1,4 +1,5 @@
 import { getAnnounment, getAnnounmentById, cerateAnnouncement, updateAnnouncement, deleteAnnoumcement, getCategories, getCategoriesById, getMode} from "./data-handler.js"
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 
 const announcement = ref([])
@@ -6,15 +7,14 @@ const announcementDetail = ref("")
 const categories = ref([])
 const categoriesDetail = ref("")
 const annMode = ref([])
-const addModeCl = ref([])
 
 //Announcement
 const fetchAnnouncement = async () => {
   announcement.value = await getAnnounment()
 }
 
-const fetchMode = async (mode, size, page, category) => {
-  annMode.value = await getMode(mode, size, page, category)
+const fetchMode = async (mode, page, category) => {
+  annMode.value = await getMode(mode, 5, page, category)
 }
 
 const announcementById = async (id) => {

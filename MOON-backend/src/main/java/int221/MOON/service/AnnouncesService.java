@@ -44,7 +44,6 @@ public class AnnouncesService {
         ZonedDateTime nowDate = ZonedDateTime.now();
         m.sort((a, b) -> b.getId() - a.getId());
         if (mode.equals("admin")) {
-            System.out.println("mode : " + mode);
             return listMapper.mapList(m, AnnouncesDto.class, modelMapper);
 
         } else if (mode.equals("close")) {
@@ -57,8 +56,6 @@ public class AnnouncesService {
             return listMapper.mapList(list, AnnouncesDto.class, modelMapper);
 
         } else if (mode.equals("active")) {
-            System.out.println("mode : " + mode);
-
             List<Announces> list = m.stream()
                     .filter(a -> a.getAnnouncementDisplay().equals(Enum.Y) &&
                             (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() > nowDate.toEpochSecond()))
@@ -108,16 +105,19 @@ public class AnnouncesService {
     public PageDTO<AnnouncesDto> getAnnouncementPage(String mode, int page, int size, int category) {
         try {
             List<AnnouncesDto> announcesList = getAnnounces(mode);
-            Categories categories = categoriesService.getIdCategories(category);
+            List<AnnouncesDto> returnList;
             Pageable pageable = PageRequest.of(page, size);
+            System.out.println("try");
             if (category == 0) {
-                Page<AnnouncesDto> listPage = listMapper.convertToPage(announcesList, pageable);
-                return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
+                System.out.println("cat == 0");
+                returnList = announcesList;
             } else {
-                List<AnnouncesDto> announcesStream = announcesList.stream().filter(a -> a.getAnnouncementCategory() == categories.getAnnouncementCategory()).toList();
-                Page<AnnouncesDto> listPage = listMapper.convertToPage(announcesStream, pageable);
-                return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
+                Categories categories = categoriesService.getIdCategories(category);
+                System.out.println("cat != 0");
+                returnList = announcesList.stream().filter(a -> a.getAnnouncementCategory() == categories.getAnnouncementCategory()).toList();
             }
+            Page<AnnouncesDto> listPage = listMapper.convertToPage(returnList, pageable);
+            return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param");
         }

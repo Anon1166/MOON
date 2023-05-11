@@ -16,7 +16,7 @@ async function getAnnounment() {
 
 async function getMode(mode="active", size=5, page=0, category=0) {
     try {
-        const res = await fetch(`${API_HOST}/pages?mode=${mode}&page=${page}&size=${size}&category${category=0}`)
+        const res = await fetch(`${API_HOST}/pages?mode=${mode}&page=${page}&size=${size}&category=${category}`)
         if (res.ok) {
             const announment = res.json()
             return announment
@@ -26,8 +26,6 @@ async function getMode(mode="active", size=5, page=0, category=0) {
         
     }
 }
-
-
 
 async function getCategories() {
     try {
