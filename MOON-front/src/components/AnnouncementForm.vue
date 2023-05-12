@@ -116,14 +116,65 @@ const submit = async () => {
     }
 }
 
+
+   
+
+    const validateDatepublish = () => {
+      if (publishDate.value) {
+        const inputDate = new Date(publishDate.value)
+        inputDate.setHours(0,0,0,0)
+        // inputDate.getTime()
+        const currentDate = new Date()
+        currentDate.setHours(0,0,0,0)
+        // currentDate.getTime()
+        console.log(inputDate);
+        console.log(currentDate);
+
+        
+        if (inputDate < currentDate) {
+            publishDate.value = null
+          // Date is in the past
+          console.log('Invalid date: Date cannot be in the past');
+        } else {
+            
+          
+          console.log('Valid date');
+        }
+      } else {
+        
+        console.log('Invalid date: Date not selected');
+      }
+    };
+
+
+    // const validateDateclose = () => {
+    //     if(closeDate.value && closetime.value ){
+    //         const publishDate = new Date(publishDate.value)
+    //         const closeDate = new Date(closeDate.value)
+    //         if(publishDate <= closeDate){
+    //             console.log('Valid date');  
+    //         } else {
+    //             console.log('Invalid date: Date cannot be in the past');
+    //         }
+
+    //     }else {
+        
+    //     console.log('Invalid date: Date not selected');
+    //   }
+    // }
+    
+    
+
+  
+    
 </script>
 <template>
     <div class="w-screen h-screen ">
         
-            <h3 class="text-center font-bold text-3xl text-blue-700 ">Announcement Detail</h3>
+            <h3 class="text-center font-bold text-3xl text-emerald-500 ">Announcement Detail</h3>
             <div class="flex justify-center">
                 <!-- from -->
-                <div class=" w-full max-w-2xl p-5 m-5 border rounded-lg shadow-lg">
+                <div class=" w-full max-w-2xl p-5 m-5 border border-emerald-400 rounded-lg shadow-xl">
                     <div class="grid gap-6 mb-6 md:grid-cols-1">
                         <form class="grid gap-6 md:grid-cols-1" @submit.prevent="submit">
                             <div class=" mb-3" >
@@ -163,12 +214,12 @@ const submit = async () => {
                                                 clip-rule="evenodd"></path>
                                         </svg>
                                     </div>
-                                    <input type="date" v-model="publishDate"
+                                    <input @change="validateDatepublish" type="date" v-model="publishDate" 
                                         class="ann-publish-date bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Select date">
                                 </div>
                                 <div class="relative max-w-sm flex ">
-                                    <input type="time" v-model="publishtime"
+                                    <input @change="validateDatepublish" type="time" v-model="publishtime"
                                         class="ann-publish-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
                             </div>
@@ -203,11 +254,11 @@ const submit = async () => {
                                     to
                                     show this announcement</label>
                             </div>
-                            <button type="submit" :disabled="check()" :class="check() ? '' : 'hover:bg-blue-800 dark:hover:bg-blue-700'"
-                                class="ann-button text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600  dark:focus:ring-blue-800  disabled:bg-zinc-600 disabled:text-zinc-400 ">Submit</button>
+                            <button type="submit" :disabled="check()"
+                                class="ann-button btn btn-outline btn-success text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  dark:focus:ring-blue-800  disabled:bg-zinc-600 disabled:text-zinc-400 ">Submit</button>
                         </form>
                         <button @click="$router.go(-1)"
-                            class="ann-button text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+                            class="ann-button btn btn-outline btn-error text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
                     </div>
                 </div>
             </div>

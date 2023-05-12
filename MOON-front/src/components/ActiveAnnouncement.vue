@@ -86,7 +86,7 @@ const userView = (id) => {
 
                     <tr class="ann-item hover" @click="userView(item.id)">
                         <td>{{ index + 1 + (annMode.page * annMode.size) }}</td>
-                        <td>{{ item.announcementTitle }}</td>
+                        <td class="text">{{ item.announcementTitle }}</td>
                         <td v-if="item.closeDate !== null && modeAnn.modes === 'close'">{{ changeTime(item.closeDate) }}</td>
                         <td v-else-if="item.closeDate === null && modeAnn.modes === 'close'" class="hidden sm:table-cell  ann-close-date">-</td>
                         <td>{{ item.announcementCategory }}</td>
@@ -110,4 +110,6 @@ const userView = (id) => {
     </div>
 </template>
  
-<style scoped></style>
+<style scoped>
+
+</style>

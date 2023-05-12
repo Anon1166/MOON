@@ -24,7 +24,7 @@ const filterAnn = computed(() => {
 <template>
   <div class="w-full h-full bg-cover flex flex-col  items-center">
     <div class="w-full max-w-screen-xl">
-      <div class="p-5 mb-2 mt-6">
+      <div class="mb-2 mt-6">
         <h1 class="font-bold text-3xl text-center text-emerald-500">SIT Announcement System (SAS)</h1>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center mb-5">
@@ -34,10 +34,10 @@ const filterAnn = computed(() => {
       <div class="ann-button flex justify-between mb-2">
         <input type="text" placeholder="search title"  class="input input-bordered w-full max-w-xs" v-model="searchKeyword" />
         <router-link :to="{ name: 'AddAnnouncement' }">
-          <button class="ann-button btn btn-outline btn-success btn-sm rounded-md  font-bold mb-2">Add Announcement</button>
+          <button class="ann-button btn btn-outline btn-success btn-sm rounded-md  font-bold ">Add Announcement</button>
         </router-link>
       </div>
-      <div class="flex justify-center ">
+      <div class="flex justify-center pb-5">
         <table class="table w-full h-full shadow-lg ">
           <thead>
             <tr>

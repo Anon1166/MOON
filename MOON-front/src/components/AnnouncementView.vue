@@ -23,7 +23,7 @@ onBeforeMount(async () => {
 <template>
   <div v-if="load" class="mx-auto px-6 sm:px-8 md:px-10 max-w-7xl">
     <div class="py-6 sm:py-8 md:py-10">
-      <h1 class="text-3xl font-bold text-center">AnnouncementDetail</h1>
+      <h1 class="text-3xl font-bold text-center ">AnnouncementDetail</h1>
     </div>
     <div class="overflow-x-auto  ">
       <table class="ann-item  w-full border border-separate rounded-lg text-left ">

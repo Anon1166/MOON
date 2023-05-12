@@ -15,10 +15,9 @@ onBeforeMount(async () => {
 <template>
     <div class=" flex justify-center w-full h-full p-20 ">
         <div class=" item-card h-3/4 w-3/4 bg-base-100 shadow-xl border border-emerald-400 rounded-lg">
-            <div class="card-body">
-                <div class="flex justify-between">
-                    <h1 class="font-bold text-3xl card-title text-emerald-500">{{ announcementDetail.announcementTitle }}
-                    </h1>
+            <div class="card-body ">
+                <div class="flex justify-between ">
+                    <div class=" font-bold text-3xl card-title text-emerald-500">{{ announcementDetail.announcementTitle }}</div>
                     <div v-if="announcementDetail.closeDate !== null && modeAnn.modes === 'close'" class=" text-sm "><span
                             class="text-red-600 font-bold">Close on : </span>{{ changeTime(announcementDetail.closeDate) }}
                     </div>
