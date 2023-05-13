@@ -64,7 +64,7 @@ public class AnnouncesService {
             }
             return listMapper.mapList(listReturn, AnnouncesDto.class, modelMapper);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param" + e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param " + e.getMessage());
         }
     }
 
@@ -118,7 +118,7 @@ public class AnnouncesService {
             Page<AnnouncesDto> listPage = listMapper.convertToPage(returnList, pageable);
             return listMapper.toPageDTO(listPage, AnnouncesDto.class, modelMapper);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param "  + e.getMessage());
         }
     }
 
