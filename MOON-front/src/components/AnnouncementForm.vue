@@ -181,7 +181,17 @@ const validateDateclose = () => {
 }
 
 
+const clearPublishDate = (event) => {
+    event.preventDefault()
+    publishDate.value = null
+    publishtime.value = null
+}
 
+const clearCloseDate = (event) => {
+    event.preventDefault()
+    closeDate.value = null
+    closetime.value = null
+}
 
 
 </script>
@@ -238,6 +248,12 @@ const validateDateclose = () => {
                                 <input type="time" v-model="publishtime" :disabled="publishDate === null"
                                     class="ann-publish-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
+                            <div class="relative max-w-sm flex ">
+                                <button @click="clearPublishDate($event)"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                clear
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-6 flex space-x-3">
                             <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Close
@@ -259,6 +275,12 @@ const validateDateclose = () => {
                                 <input type="time" @change="validateDateclose" v-model="closetime"
                                     :disabled="closeDate === null"
                                     class="ann-close-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="relative max-w-sm flex ">
+                                <button @click="clearCloseDate($event)"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                clear
+                                </button>
                             </div>
                         </div>
                         <div class="flex items-start mb-6">

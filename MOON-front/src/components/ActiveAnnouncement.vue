@@ -84,7 +84,7 @@ const userView = (id) => {
                 </thead>
                 <tbody v-for="(item, index) in annMode.content" :key="index">
 
-                    <tr class="ann-item hover" @click="userView(item.id)">
+                    <tr class="ann-item hover cursor-pointer" @click="userView(item.id)">
                         <td>{{ index + 1 + (annMode.page * annMode.size) }}</td>
                         <td class="text">{{ item.announcementTitle }}</td>
                         <td v-if="item.closeDate !== null && modeAnn.modes === 'close'">{{ changeTime(item.closeDate) }}</td>
@@ -100,13 +100,31 @@ const userView = (id) => {
         </div>
         <div v-if="annMode.totalElements > 5" class="flex  flex-row justify-center p-5 ">
             <button :disabled="annMode.page === 0" @click="changePage(--pageId)" class="btn btn-outline dark:btn-success dark:btn-outline ">«</button>
-            <div v-for="(item) in annMode.totalPages" class="flex btn-group ">
-                <button @click="changePage(item - 1)" class="btn btn-outline dark:btn-success dark:btn-outline "
-                    :class="pageId === item - 1 ? ' bg-emerald-400 dark:bg-black ' : ''">{{ item }}</button>
+            <div v-for="(item, index) in annMode.totalPages" class="flex btn-group ">
+                <button @click="changePage(index)" class="btn btn-outline dark:btn-success dark:btn-outline "
+                    :class="pageId === index ? ' bg-emerald-400 dark:bg-black ' : ''">{{ item }}
+                </button>
             </div>
             <button :disabled="annMode.page === annMode.totalPages - 1" class="btn btn-outline dark:btn-success dark:btn-outline"
                 @click="changePage(++pageId)">»</button>
         </div>
+<!-- 
+        <div v-if="annMode.totalElements > 5" class="flex flex-row justify-center p-5">
+            <button :disabled="annMode.page === 0" @click="changePage(--pageId)" class="btn btn-outline dark:btn-success dark:btn-outline">«</button>
+            <div v-if="annMode.page <= annMode.totalPages - 10" class="flex btn-group">
+                <button v-for="(item, index) in 10" :key="index" @click="changePage(index + annMode.page)" class="btn btn-outline dark:btn-success dark:btn-outline" :class="pageId === index + annMode.page ? 'bg-emerald-400 dark:bg-black' : ''">{{ index + annMode.page }}</button>
+            </div>
+            <div v-else class="flex btn-group">
+                <button v-for="(item, index) in annMode.totalPages - annMode.page" :key="index" @click="changePage(index + annMode.page)" class="btn btn-outline dark:btn-success dark:btn-outline" :class="pageId === index + annMode.page ? 'bg-emerald-400 dark:bg-black' : ''">{{ index + annMode.page }}</button>
+            </div>
+            <button :disabled="annMode.page === annMode.totalPages - 1" class="btn btn-outline dark:btn-success dark:btn-outline" @click="changePage(++pageId)">»</button>
+        </div> -->
+
+
+
+
+
+
     </div>
 </template>
  
