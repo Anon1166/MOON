@@ -2,12 +2,17 @@ package int221.MOON.controllers;
 
 import int221.MOON.Dto.*;
 import int221.MOON.service.AnnouncesService;
+
+
+import int221.MOON.validation.ErrorResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +58,16 @@ public class AnnouncesController {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
         List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.add(error.getDefaultMessage());
         }
         return ResponseEntity.badRequest().body(errors.toString());
+//        ErrorResponse er = new ErrorResponse(
+//                HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getDescription(false).substring(4));
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+
     }
 }
