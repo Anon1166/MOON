@@ -32,8 +32,7 @@ public class AnnouncesService {
     private ModelMapper modelMapper;
     @Autowired
     private ListMapper listMapper;
-    @Autowired
-    private ValidDateValidator validDateValidator;
+
 
 
     public AnnouncesDetailDto getAnnouncesById(Integer annId) {
@@ -74,8 +73,7 @@ public class AnnouncesService {
 
     public EditAnnDto createAnnouncement(InputAnnouncesDTO announces) {
         Categories category = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
-        validDateValidator.setCloseDate(announces.getCloseDate());
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + " does not exist !!!"));
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
         announcesRepository.saveAndFlush(announcement);
@@ -86,7 +84,6 @@ public class AnnouncesService {
     public UpdateDto updateAnnouncement(InputAnnouncesDTO announces, Integer announcementId) {
         Categories categories = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
-        validDateValidator.setCloseDate(announces.getCloseDate());
         Announces announcement = modelMapper.map(announces, Announces.class);
         Announces a = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new RuntimeException("can not find id !!!"));

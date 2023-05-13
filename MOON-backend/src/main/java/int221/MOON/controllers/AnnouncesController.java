@@ -5,7 +5,10 @@ import int221.MOON.service.AnnouncesService;
 
 
 import int221.MOON.validation.ErrorResponse;
+import int221.MOON.validation.ValidDateValidator;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 @CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173", "http://intproj22.sit.kmutt.ac.th/at2"})
 @RestController
 @RequestMapping("/api/announcements")
@@ -33,11 +38,12 @@ public class AnnouncesController {
     }
 
     @PostMapping("")
-    public EditAnnDto createAnnouncement(@Valid @RequestBody InputAnnouncesDTO announces){
+    public EditAnnDto createAnnouncement( @RequestBody InputAnnouncesDTO announces){
+
         return  announcesService.createAnnouncement(announces);
     }
     @PutMapping("/{announcementId}")
-    public UpdateDto updateAnnouncement(@PathVariable Integer announcementId ,@Valid @RequestBody InputAnnouncesDTO announces){
+    public UpdateDto updateAnnouncement(@PathVariable Integer announcementId , @RequestBody InputAnnouncesDTO announces){
         return  announcesService.updateAnnouncement(announces,announcementId);
     }
     @DeleteMapping("/{announcementId}")
@@ -59,15 +65,14 @@ public class AnnouncesController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
-        List<String> errors = new ArrayList<>();
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
+        ErrorResponse er = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Announcement attributes validation failed!",
+                request.getDescription(false));
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.add(error.getDefaultMessage());
+            er.addValidationError(error.getField(), error.getDefaultMessage());
         }
-        return ResponseEntity.badRequest().body(errors.toString());
-//        ErrorResponse er = new ErrorResponse(
-//                HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getDescription(false).substring(4));
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
-
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
     }
 }
