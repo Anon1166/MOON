@@ -7,6 +7,7 @@ import int221.MOON.entities.Announces;
 import int221.MOON.entities.Categories;
 import int221.MOON.repository.AnnouncesRepository;
 import int221.MOON.repository.CategoriesRepository;
+import int221.MOON.validation.ValidDateValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -31,6 +32,8 @@ public class AnnouncesService {
     private ModelMapper modelMapper;
     @Autowired
     private ListMapper listMapper;
+    @Autowired
+    private ValidDateValidator validDateValidator;
 
 
     public AnnouncesDetailDto getAnnouncesById(Integer annId) {
@@ -72,9 +75,9 @@ public class AnnouncesService {
     public EditAnnDto createAnnouncement(InputAnnouncesDTO announces) {
         Categories category = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
+        validDateValidator.setCloseDate(announces.getCloseDate());
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
-//        Announces entity = new Announces()
         announcesRepository.saveAndFlush(announcement);
         return modelMapper.map(announcement, EditAnnDto.class);
     }
@@ -83,6 +86,7 @@ public class AnnouncesService {
     public UpdateDto updateAnnouncement(InputAnnouncesDTO announces, Integer announcementId) {
         Categories categories = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
+        validDateValidator.setCloseDate(announces.getCloseDate());
         Announces announcement = modelMapper.map(announces, Announces.class);
         Announces a = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new RuntimeException("can not find id !!!"));

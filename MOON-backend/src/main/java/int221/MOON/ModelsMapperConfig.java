@@ -1,5 +1,6 @@
 package int221.MOON;
 
+import int221.MOON.validation.ValidDateValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,4 +18,8 @@ public class ModelsMapperConfig {
         return ListMapper.getInstance();
     }
 
+    @Bean
+    public ValidDateValidator validDateValidator() {
+        return new ValidDateValidator();
+    }
 }
