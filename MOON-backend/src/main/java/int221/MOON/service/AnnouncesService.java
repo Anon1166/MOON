@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,30 +41,31 @@ public class AnnouncesService {
     }
 
     public List<AnnouncesDto> getAnnounces(String mode) {
-        List<Announces> m = announcesRepository.findAll();
-        ZonedDateTime nowDate = ZonedDateTime.now();
-        m.sort((a, b) -> b.getId() - a.getId());
-        if (mode.equals("admin")) {
-            return listMapper.mapList(m, AnnouncesDto.class, modelMapper);
-
-        } else if (mode.equals("close")) {
-            List<Announces> list = m.stream()
-                    .filter(a ->
-                            a.getAnnouncementDisplay().equals(Enum.Y) &&
-                                    (a.getCloseDate() == null ||
-                                            (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() < nowDate.toEpochSecond())))
-                    .collect(Collectors.toList());
-            return listMapper.mapList(list, AnnouncesDto.class, modelMapper);
-
-        } else if (mode.equals("active")) {
-            List<Announces> list = m.stream()
-                    .filter(a -> a.getAnnouncementDisplay().equals(Enum.Y) &&
-                            (a.getCloseDate() != null && a.getCloseDate().toEpochSecond() > nowDate.toEpochSecond()))
-                    .collect(Collectors.toList());
-            return listMapper.mapList(list, AnnouncesDto.class, modelMapper);
-
+        try {
+            List<Announces> m = announcesRepository.findAll();
+            ZonedDateTime nowDate = ZonedDateTime.now();
+            m.sort((a, b) -> b.getId() - a.getId());
+            List<Announces> listReturn = new ArrayList<>();
+            if (mode.equals("admin")) {
+                listReturn = m;
+            } else if (mode.equals("close")) {
+                listReturn = m.stream()
+                        .filter(a ->
+                                a.getAnnouncementDisplay().equals(Enum.Y) &&
+                                        (a.getCloseDate() != null && a.getCloseDate().isBefore(nowDate)))
+                        .collect(Collectors.toList());
+            } else if (mode.equals("active")) {
+                listReturn = m.stream()
+                        .filter(a ->
+                                a.getAnnouncementDisplay().equals(Enum.Y) &&
+                                        (a.getPublishDate() == null || a.getPublishDate().isBefore(nowDate)) &&
+                                        (a.getCloseDate() == null || a.getCloseDate().isAfter(nowDate)))
+                        .collect(Collectors.toList());
+            }
+            return listMapper.mapList(listReturn, AnnouncesDto.class, modelMapper);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param" + e);
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cannot request invalid param");
     }
 
 
