@@ -109,13 +109,10 @@ public class AnnouncesService {
             List<AnnouncesDto> announcesList = getAnnounces(mode);
             List<AnnouncesDto> returnList;
             Pageable pageable = PageRequest.of(page, size);
-            System.out.println("try");
             if (category == 0) {
-                System.out.println("cat == 0");
                 returnList = announcesList;
             } else {
                 Categories categories = categoriesService.getIdCategories(category);
-                System.out.println("cat != 0");
                 returnList = announcesList.stream().filter(a -> a.getAnnouncementCategory() == categories.getAnnouncementCategory()).toList();
             }
             Page<AnnouncesDto> listPage = listMapper.convertToPage(returnList, pageable);

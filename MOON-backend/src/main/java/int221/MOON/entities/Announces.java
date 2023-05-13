@@ -1,13 +1,12 @@
 package int221.MOON.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import int221.MOON.Enum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.ZonedDateTime;
-import java.util.Date;
+
 
 @Getter
 @Setter
