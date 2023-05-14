@@ -17,18 +17,18 @@ onBeforeMount(async () => {
         <div class=" item-card h-3/4 w-3/4 bg-base-100 shadow-xl border border-emerald-400 rounded-lg">
             <div class="card-body ">
                 <div class="flex justify-between ">
-                    <div class=" font-bold text-3xl card-title text-emerald-500">{{ announcementDetail.announcementTitle }}</div>
-                    <div v-if="announcementDetail.closeDate !== null && modeAnn.modes === 'close'" class=" text-sm "><span
+                    <div class="ann-title font-bold text-3xl card-title text-emerald-500">{{ announcementDetail.announcementTitle }}</div>
+                    <div v-if="announcementDetail.closeDate !== null && modeAnn.modes === 'close'" class="ann-close-date  text-sm "><span
                             class="text-red-600 font-bold">Close on : </span>{{ changeTime(announcementDetail.closeDate) }}
                     </div>
                 </div>
-                <p class="opacity-75">{{ announcementDetail.announcementCategory }}</p>
-                <div>{{ announcementDetail.announcementDescription }}</div>
+                <p class="ann-category opacity-75">{{ announcementDetail.announcementCategory }}</p>
+                <div class="ann-description">{{ announcementDetail.announcementDescription }}</div>
 
 
 
 
-                <div class="card-actions justify-end">
+                <div class="ann-button card-actions justify-end">
                     <button @click="$router.go(-1)" class="btn btn-outline btn-error">back</button>
                 </div>
             </div>
