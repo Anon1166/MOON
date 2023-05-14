@@ -8,6 +8,7 @@ import int221.MOON.entities.Categories;
 import int221.MOON.repository.AnnouncesRepository;
 import int221.MOON.repository.CategoriesRepository;
 import int221.MOON.validation.ValidDateValidator;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -91,6 +92,7 @@ public class AnnouncesService {
         a.setPublishDate(announcement.getPublishDate());
         a.setAnnouncementDescription(announcement.getAnnouncementDescription());
         a.setCloseDate(announcement.getCloseDate());
+
         a.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         a.setCategories(categories);
         announcesRepository.saveAndFlush(a);

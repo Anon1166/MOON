@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.ZonedDateTime;
 
+import static int221.MOON.Enum.Y;
+
 @Getter
 @Setter
 @Validated
@@ -25,21 +28,26 @@ public class InputAnnouncesDTO {
 
 
     private Integer id;
-    @NotEmpty(message = "Title is required")
-    @Size(min = 1, max = 200, message = "Title must be between 1 and 200")
+    @NotBlank(message = "must not be blank")
+    @NotEmpty(message = "must not be null")
+    @Size(min = 1, max = 200, message = "size must be between 1 and 200")
     private String announcementTitle;
 
-    @NotEmpty(message = "Description is required")
-    @Size(min = 1, max = 10000, message = "Description must be between 1 and 10000")
+    @NotBlank(message = "must not be blank")
+    @NotEmpty(message = "must not be null")
+    @Size(min = 1, max = 10000, message = "size must be between 1 and 10000")
     private String announcementDescription;
 
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
 
+
+    @NotEmpty(message = "must be either 'Y' or 'N'")
+    @NotNull(message = "must be either 'Y' or 'N'")
     @Enumerated(EnumType.STRING)
-    private Enum announcementDisplay;
+    private String announcementDisplay;
 
     @Column(name = "categoriesCategoryId")
-    @NotNull(message = "categoryId cannot be null")
+    @NotNull(message = "must not be null")
     private Integer categoryId;
 }

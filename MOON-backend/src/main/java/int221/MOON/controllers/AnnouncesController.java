@@ -5,10 +5,7 @@ import int221.MOON.service.AnnouncesService;
 
 
 import int221.MOON.validation.ErrorResponse;
-import int221.MOON.validation.ValidDateValidator;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
-import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +13,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173", "http://intproj22.sit.kmutt.ac.th/at2"})
 @RestController
@@ -38,12 +33,15 @@ public class AnnouncesController {
     }
 
     @PostMapping("")
-    public EditAnnDto createAnnouncement( @RequestBody InputAnnouncesDTO announces){
-
+    public EditAnnDto createAnnouncement(@Valid @RequestBody InputAnnouncesDTO announces){
+        System.out.println(announces.getAnnouncementDisplay());
+//        if( !announces.getAnnouncementDisplay().equals("Y") && !announces.getAnnouncementDisplay().equals("N")) {
+//            announces.setAnnouncementDisplay("");
+//        }
         return  announcesService.createAnnouncement(announces);
     }
     @PutMapping("/{announcementId}")
-    public UpdateDto updateAnnouncement(@PathVariable Integer announcementId , @RequestBody InputAnnouncesDTO announces){
+    public UpdateDto updateAnnouncement(@PathVariable Integer announcementId ,@Valid @RequestBody InputAnnouncesDTO announces){
         return  announcesService.updateAnnouncement(announces,announcementId);
     }
     @DeleteMapping("/{announcementId}")
