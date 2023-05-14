@@ -100,7 +100,7 @@ const userView = (id) => {
 
         <div v-if="annMode.totalElements > 5" class="flex  flex-row justify-center p-5 ">
             <button :disabled="annMode.page === 0" @click="changePage(--pageId)" class="ann-page-prev btn btn-outline dark:btn-success dark:btn-outline ">«</button>
-            <div v-for="(item, index) in 10" class="flex btn-group ">
+            <div v-for="(item, index) in Math.min(10, annMode.totalPages)" class="flex btn-group ">
                 <button @click="changePage(pageId >= 10 ? index+(pageId-10+1) : index)" class=" btn btn-outline dark:btn-success dark:btn-outline "
                     :class="pageId >= 10 &&  pageId === index+(pageId-10+1) ? `ann-page-${index} bg-emerald-400 dark:bg-black` : pageId === index ? `ann-page-${index} bg-emerald-400 dark:bg-black` : `ann-page-${index}`">
                     {{  pageId >= 10 ? item+(pageId-10+1) : item }}

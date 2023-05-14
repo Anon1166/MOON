@@ -18,29 +18,37 @@ public class ValidDateValidator implements ConstraintValidator<ValidDate, InputA
 
     @Override
     public boolean isValid(InputAnnouncesDTO i, ConstraintValidatorContext context) {
-        if (i.getPublishDate() == null || i.getCloseDate() == null) {
+        System.out.println(i.getCloseDate());
+        System.out.println(i.getPublishDate());
+
+        if (i.getCloseDate() == null && i.getPublishDate() == null) {
+            System.out.println("nullDate");
             return true;
         }
 
         ZonedDateTime currentDate = ZonedDateTime.now();
+        System.out.println(currentDate);
 
         context.disableDefaultConstraintViolation();
 
-        if (i.getPublishDate().isBefore(currentDate)) {
-            context.buildConstraintViolationWithTemplate("Invalid publishDate")
+        if (i.getPublishDate() != null && i.getPublishDate().isBefore(currentDate)) {
+            System.out.println("getPublishDateisBeforecurrentDate");
+            context.buildConstraintViolationWithTemplate("must be a date in the present or in the future")
                     .addPropertyNode("publishDate")
                     .addConstraintViolation();
             return false;
-        } else if (i.getCloseDate().isBefore(currentDate)) {
-            context.buildConstraintViolationWithTemplate("Invalid closeDate")
+        } else if (i.getCloseDate() != null && i.getCloseDate().isBefore(currentDate)) {
+            System.out.println("getCloseDateisBeforecurrentDate");
+            context.buildConstraintViolationWithTemplate("must be a future date")
                     .addPropertyNode("closeDate")
                     .addConstraintViolation();
             return false;
-        } else if (i.getPublishDate().isAfter(i.getCloseDate()) || i.getPublishDate().equals(i.getCloseDate())) {
-            context.buildConstraintViolationWithTemplate("Invalid publishDate")
+        } else if (i.getPublishDate() != null && i.getCloseDate() != null && (i.getPublishDate().isAfter(i.getCloseDate()) || i.getPublishDate().equals(i.getCloseDate()))) {
+            System.out.println("getPublishDateisAftergetCloseDate");
+            context.buildConstraintViolationWithTemplate("must be lower than close date")
                     .addPropertyNode("publishDate")
                     .addConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Invalid closeDate")
+            context.buildConstraintViolationWithTemplate("must be later than publish date")
                     .addPropertyNode("closeDate")
                     .addConstraintViolation();
             return false;

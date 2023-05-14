@@ -8,17 +8,13 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.ZonedDateTime;
 
-import static int221.MOON.Enum.Y;
 
 @Getter
 @Setter
@@ -43,11 +39,13 @@ public class InputAnnouncesDTO {
 
 
     @NotEmpty(message = "must be either 'Y' or 'N'")
-    @NotNull(message = "must be either 'Y' or 'N'")
+    @Pattern(regexp = "[YN]", message = "must be either 'Y' or 'N'")
     @Enumerated(EnumType.STRING)
     private String announcementDisplay;
 
     @Column(name = "categoriesCategoryId")
     @NotNull(message = "must not be null")
+    @DecimalMin(value = "1", inclusive = true, message = "does not exists")
+    @DecimalMax(value = "4", inclusive = true, message = "does not exists")
     private Integer categoryId;
 }

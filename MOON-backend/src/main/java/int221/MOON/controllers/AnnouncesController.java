@@ -34,10 +34,6 @@ public class AnnouncesController {
 
     @PostMapping("")
     public EditAnnDto createAnnouncement(@Valid @RequestBody InputAnnouncesDTO announces){
-        System.out.println(announces.getAnnouncementDisplay());
-//        if( !announces.getAnnouncementDisplay().equals("Y") && !announces.getAnnouncementDisplay().equals("N")) {
-//            announces.setAnnouncementDisplay("");
-//        }
         return  announcesService.createAnnouncement(announces);
     }
     @PutMapping("/{announcementId}")
