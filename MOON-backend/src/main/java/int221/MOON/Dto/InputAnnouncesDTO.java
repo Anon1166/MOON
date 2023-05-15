@@ -37,8 +37,7 @@ public class InputAnnouncesDTO {
     private ZonedDateTime closeDate;
 
     @Nullable
-//    @NotBlank(message = "must be either 'Y' or 'N'")
-    @Pattern(regexp = "[YN]|null", message = "must be either 'Y' or 'N'")
+    @Pattern(regexp = "[YN]", message = "must be either 'Y' or 'N'")
     @Enumerated(EnumType.STRING)
     private String announcementDisplay ;
 

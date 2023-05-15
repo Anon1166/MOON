@@ -78,8 +78,6 @@ public class AnnouncesService {
         System.out.println(announces.getAnnouncementDisplay());
         if (announces.getAnnouncementDisplay() == null) {
             announces.setAnnouncementDisplay("N");
-            System.out.println("check");
-            System.out.println(announces.getAnnouncementDisplay());
         }
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);

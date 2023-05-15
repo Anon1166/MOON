@@ -28,8 +28,8 @@ onBeforeMount(async () => {
 
 
 
-                <div class="ann-button card-actions justify-end">
-                    <button @click="$router.go(-1)" class="btn btn-outline btn-error">back</button>
+                <div class="card-actions justify-end">
+                    <button @click="$router.go(-1)" class="ann-button btn btn-outline btn-error">back</button>
                 </div>
             </div>
 
