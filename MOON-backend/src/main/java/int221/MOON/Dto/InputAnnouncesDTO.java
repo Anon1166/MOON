@@ -3,6 +3,7 @@ package int221.MOON.Dto;
 import int221.MOON.Enum;
 import int221.MOON.validation.ValidDate;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,24 +25,22 @@ public class InputAnnouncesDTO {
 
 
     private Integer id;
-    @NotBlank(message = "must not be blank")
-    @NotEmpty(message = "must not be null")
     @Size(min = 1, max = 200, message = "size must be between 1 and 200")
+    @NotBlank(message = "must not be blank")
     private String announcementTitle;
 
-    @NotBlank(message = "must not be blank")
-    @NotEmpty(message = "must not be null")
     @Size(min = 1, max = 10000, message = "size must be between 1 and 10000")
+    @NotBlank(message = "must not be blank")
     private String announcementDescription;
 
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
 
-
-    @NotEmpty(message = "must be either 'Y' or 'N'")
-    @Pattern(regexp = "[YN]", message = "must be either 'Y' or 'N'")
+    @Nullable
+//    @NotBlank(message = "must be either 'Y' or 'N'")
+    @Pattern(regexp = "[YN]|null", message = "must be either 'Y' or 'N'")
     @Enumerated(EnumType.STRING)
-    private String announcementDisplay;
+    private String announcementDisplay ;
 
     @Column(name = "categoriesCategoryId")
     @NotNull(message = "must not be null")

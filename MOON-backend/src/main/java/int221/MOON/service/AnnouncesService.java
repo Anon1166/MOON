@@ -75,6 +75,12 @@ public class AnnouncesService {
     public EditAnnDto createAnnouncement(InputAnnouncesDTO announces) {
         Categories category = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + " does not exist !!!"));
+        System.out.println(announces.getAnnouncementDisplay());
+        if (announces.getAnnouncementDisplay() == null) {
+            announces.setAnnouncementDisplay("N");
+            System.out.println("check");
+            System.out.println(announces.getAnnouncementDisplay());
+        }
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
         announcesRepository.saveAndFlush(announcement);
@@ -85,6 +91,9 @@ public class AnnouncesService {
     public UpdateDto updateAnnouncement(InputAnnouncesDTO announces, Integer announcementId) {
         Categories categories = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + "does not exist !!!"));
+        if (announces.getAnnouncementDisplay() == null) {
+            announces.setAnnouncementDisplay("N");
+        }
         Announces announcement = modelMapper.map(announces, Announces.class);
         Announces a = announcesRepository.findById(announcementId).orElseThrow(
                 () -> new RuntimeException("can not find id !!!"));
@@ -92,7 +101,6 @@ public class AnnouncesService {
         a.setPublishDate(announcement.getPublishDate());
         a.setAnnouncementDescription(announcement.getAnnouncementDescription());
         a.setCloseDate(announcement.getCloseDate());
-
         a.setAnnouncementDisplay(announcement.getAnnouncementDisplay());
         a.setCategories(categories);
         announcesRepository.saveAndFlush(a);
