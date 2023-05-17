@@ -3,17 +3,21 @@ import { announcementDetail, announcementById, changeTime } from '../assets/data
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '../../src/router/index';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 const load = ref('')
 const { params } = useRoute()
 
 onBeforeMount(async () => {
   await announcementById(params.id)
+  console.log(announcementDetail.value.announcementDescription)
   if (!announcementDetail.value) {
     alert("The request page is not available")
     router.push('/admin/announcement')
   }
   else {
     load.value = true
+    
   }
 })
 
@@ -26,6 +30,7 @@ onBeforeMount(async () => {
       <h1 class="text-3xl font-bold text-center ">AnnouncementDetail</h1>
     </div>
     <div class="overflow-x-auto  ">
+      <div  theme="snow" v-html="announcementDetail.announcementDescription" class="ann-description p-2"></div>
       <table class="ann-item  w-full border border-separate rounded-lg text-left ">
         <tr>
           <th class="p-2 ">Title</th>
@@ -37,7 +42,7 @@ onBeforeMount(async () => {
         </tr>
         <tr>
           <th class="p-2">Description</th>
-          <td class="ann-description p-2">{{ announcementDetail.announcementDescription }}</td>
+          <td v-html="announcementDetail.announcementDescription" class="ann-description p-2"></td>
         </tr>
         <tr>
           <th class="p-2">Publish Date</th>

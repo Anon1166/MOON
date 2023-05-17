@@ -1,4 +1,6 @@
 <script setup>
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { addAnnouncement } from '../assets/data-manager.js'
 import { announcementDetail, announcementById, fetchCategory, categories, updateAnnouncementbyId } from '../assets/data-manager';
 import { ref, computed } from 'vue';
@@ -54,7 +56,7 @@ const changeTime = (date) => {
         return formattedTime
     }
 }
-const createAnn = ref({
+const createAnn =  ref({
     announcementTitle: "",
     publishDate: "",
     closeDate: "",
@@ -169,7 +171,7 @@ const validateDateclose = () => {
         } else {
             !closetime.value ? closetime.value = "18:00" : ''
         }
-        
+
         if (closetime.value < publishtime.value) {
             closetime.value = "18:00"
         }
@@ -192,6 +194,8 @@ const clearCloseDate = (event) => {
     closeDate.value = null
     closetime.value = null
 }
+
+console.log(createAnn.value.announcementDescription);
 
 
 </script>
@@ -221,12 +225,22 @@ const clearCloseDate = (event) => {
                         <div class="mb-6 flex space-x-2">
                             <label for="description"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <textarea v-model=createAnn.announcementDescription id="description" rows="4" required
+                            <!--                        <textarea v-model=createAnn.announcementDescription id="description" rows="4" required
                                 maxlength="10000"
                                 class="ann-description block p-2.5 w-full peer text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Write your thoughts here..."></textarea>
+                                placeholder="Write your thoughts here..."></textarea> -->
+                                <div class="w-full ">
+                        <QuillEditor theme="snow" toolbar="minimal" v-model:content="createAnn.announcementDescription"
+                                contentType="html" />
                         </div>
-                        <div class="mb-6 flex space-x-3">
+                            
+                        </div>
+                       
+
+
+
+
+                        <div class="mb-6 flex space-x-3 mt-5">
                             <label for="message"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Publish
                                 Date</label>
@@ -251,12 +265,12 @@ const clearCloseDate = (event) => {
                             <div class="relative max-w-sm flex ">
                                 <button @click="clearPublishDate($event)"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                clear
+                                    clear
                                 </button>
                             </div>
                         </div>
                         <div class="mb-6 flex space-x-3">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Close
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pr-3">Close
                                 Date</label>
                             <div class="relative max-w-sm flex  ">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -279,7 +293,7 @@ const clearCloseDate = (event) => {
                             <div class="relative max-w-sm flex ">
                                 <button @click="clearCloseDate($event)"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                clear
+                                    clear
                                 </button>
                             </div>
                         </div>

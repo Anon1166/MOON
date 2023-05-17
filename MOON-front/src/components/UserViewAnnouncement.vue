@@ -23,11 +23,7 @@ onBeforeMount(async () => {
                     </div>
                 </div>
                 <p class="ann-category opacity-75">{{ announcementDetail.announcementCategory }}</p>
-                <div class="ann-description">{{ announcementDetail.announcementDescription }}</div>
-
-
-
-
+                <div v-html="announcementDetail.announcementDescription" class="ann-description"></div>
                 <div class="card-actions justify-end">
                     <button @click="$router.go(-1)" class="ann-button btn btn-outline btn-error">back</button>
                 </div>
