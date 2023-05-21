@@ -19,7 +19,7 @@ onBeforeMount(async () => {
         <div class=" item-card h-3/4 w-3/4 bg-base-100 shadow-xl border border-emerald-400 rounded-lg">
             <div class="card-body ">
                 <div class="flex justify-between ">
-                    <div class="ann-title font-bold text-3xl card-title text-emerald-500">{{ announcementDetail.announcementTitle }}</div>
+                    <div class="ann-title font-bold text-3xl card-title text-emerald-500 ">{{ announcementDetail.announcementTitle }}</div>
                     <div v-if="announcementDetail.closeDate !== null && modeAnn.modes === 'close'" class="ann-close-date  text-sm "><span
                             class="text-red-600 font-bold">Close on : </span>{{ changeTime(announcementDetail.closeDate) }}
                     </div>
@@ -35,6 +35,8 @@ onBeforeMount(async () => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
 
 

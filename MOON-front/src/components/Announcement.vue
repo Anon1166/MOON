@@ -1,6 +1,6 @@
 <script setup>
 import { announcement, fetchAnnouncement, changeTime, deleteAnnoumcementById } from '../assets/data-manager.js'
-import { onBeforeMount , ref, computed} from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 
 
 
@@ -12,9 +12,9 @@ const getId = ref("")
 
 const searchKeyword = ref('')
 const filterAnn = computed(() => {
-    return announcement.value.filter((ann) =>
+  return announcement.value.filter((ann) =>
     ann.announcementTitle?.toLowerCase().includes(searchKeyword.value.toLowerCase())
-    ).sort((a, b) => b.level - a.level)
+  ).sort((a, b) => b.level - a.level)
 })
 
 
@@ -32,7 +32,15 @@ const filterAnn = computed(() => {
         <div class="text-center">{{ timezone }}</div>
       </div>
       <div class="ann-button flex justify-between mb-2">
-        <input type="text" placeholder="search title"  class="input input-bordered w-full max-w-xs" v-model="searchKeyword" />
+        <div class="flex justify-center items-center space-x-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search text-emerald-500 "
+            viewBox="0 0 16 16">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
+          <input type="text" placeholder="search title" class="input input-bordered w-full max-w-xs"
+            v-model="searchKeyword" />
+        </div>
         <router-link :to="{ name: 'AddAnnouncement' }">
           <button class="ann-button btn btn-outline btn-success btn-sm rounded-md  font-bold ">Add Announcement</button>
         </router-link>
@@ -51,11 +59,11 @@ const filterAnn = computed(() => {
               <th class="bg-emerald-400 text-black text-center">Action</th>
             </tr>
           </thead>
-          
+
           <tbody class="overflow-scroll">
             <tr v-for="(item, index) in filterAnn " :key="index" class="ann-item  ">
               <td class="hidden sm:table-cell">{{ index + 1 }}</td>
-              <td class="truncate ann-title text">{{ item.announcementTitle}}</td>
+              <td class="truncate ann-title text">{{ item.announcementTitle }}</td>
               <td class="hidden sm:table-cell ann-category">{{ item.announcementCategory }}</td>
               <td v-if="item.publishDate !== null" class="hidden sm:table-cell ann-publish-date">{{
                 changeTime(item.publishDate) }}</td>
@@ -69,7 +77,8 @@ const filterAnn = computed(() => {
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
                   <button class="btn btn-outline btn-success w-20 btn-sm rounded-md font-bold ">view</button>
                 </router-link>
-                <button @click="getId = item.id" class="ann-button btn-success w-20 btn-sm rounded-md bg-red-400 font-bold"><label
+                <button @click="getId = item.id"
+                  class="btn btn-outline btn-error w-20 btn-sm rounded-md  font-bold"><label
                     for="modal">delete</label></button>
               </td>
             </tr>
@@ -84,10 +93,11 @@ const filterAnn = computed(() => {
     <input type="checkbox" id="modal" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
       <div class="modal-box w-2/3">
-        <h3 class="text-xl text-center font-medium text-gray-900 dark:text-gray-300">Are you sure you want to delete this item?</h3>
+        <h3 class="text-xl text-center font-medium text-gray-900 dark:text-gray-300">Are you sure you want to delete this
+          item?</h3>
         <div class="modal-action flex justify-center">
-          <label for="modal" @click="deleteAnnoumcementById(getId)" class="btn">confirm</label>
-          <label for="modal" class="btn">cancel</label>
+          <label for="modal" @click="deleteAnnoumcementById(getId)" class="btn btn-outline btn-success">confirm</label>
+          <label for="modal" class="btn btn-outline btn-error">cancel</label>
         </div>
       </div>
     </div>
@@ -95,13 +105,10 @@ const filterAnn = computed(() => {
 </template>
  
 <style scoped>
-
 .text {
   display: block;
   width: 500px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-</style>
+}</style>

@@ -14,10 +14,11 @@ const publishtime = ref(null)
 const closeDate = ref(null)
 const closetime = ref(null)
 const display = ref(false)
-const checkDis = ref(false)
+const checkDes = ref(false)
 const checkTi = ref(false)
 const checkPub = ref(false)
 const checkClose = ref(false)
+const textContent = ref('')
 
 
 
@@ -84,6 +85,18 @@ const checktime = (a) => {
     }
 }
 
+
+
+
+const checkDescription = () => {
+    const des = textContent.value.getQuill().getText()
+    if (des.trim().length === 0) {
+        return false
+    }
+    return true
+}
+
+
 const check = () => {
     const c = categories.value.filter((a) => a.announcementCategory === data1.value.announcementCategory)[0]?.categoryId
     const a = display.value ? 'Y' : 'N'
@@ -93,7 +106,7 @@ const check = () => {
     const timeclo1 = new Date(data1.value.closeDate).getTime()
     if (
         data1.value.announcementTitle !== createAnn.value.announcementTitle ||
-        (data1.value.announcementDescription !== createAnn.value.announcementDescription && createAnn.value.announcementDescription.replace(/<[^>]+>/g, '') !== "") ||
+        (data1.value.announcementDescription !== createAnn.value.announcementDescription && checkDescription()) ||
         c !== createAnn.value.categoryId ||
         data1.value.announcementDisplay !== a ||
         checktime(timepub) !== timepub1 ||
@@ -113,10 +126,10 @@ const submit = async () => {
         setTimeout(() => {
             checkTi.value = false
         },2000)
-    } else if (createAnn.value.announcementDescription.replace(/<[^>]+>/g, '') === "") {
-        checkDis.value = true
+    } else if (!checkDescription()) {
+        checkDes.value = true
         setTimeout(() => {
-            checkDis.value = false
+            checkDes.value = false 
         },2000)
     } else if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "" && validateTimepublish() && validateTimeClose()) {
         createAnn.value.publishDate = formatDateTime(publishDate.value, publishtime.value)
@@ -200,9 +213,6 @@ const validateTimeClose = () => {
     const c = new Date(closeDate.value + " " + closetime.value)
     const p = new Date(publishDate.value + " " + publishtime.value)
     const currentDate = new Date()
-    console.log(c);
-    console.log(p);
-    console.log(c<=p);
     if (c <= currentDate || c <= p) {
         checkClose.value = true
         setTimeout(() => {
@@ -258,8 +268,8 @@ const clearCloseDate = (event) => {
                                 class="block  text-sm font-medium text-gray-900 dark:text-white">Description</label>
                             <div class="w-3/4 h-3/4 " >
                                <QuillEditor theme="snow" toolbar="full" 
-                                    v-model:content="createAnn.announcementDescription" contentType="html" />
-                                <p v-if="checkDis" class="text-xs absolute text-red-500">Please fill out this filed.</p>
+                                    v-model:content="createAnn.announcementDescription" contentType="html" @text-change="checkDescription" ref="textContent" />
+                                <p v-if="checkDes" class="text-xs absolute text-red-500">Please fill out this filed.</p>
                             </div>
 
                         </div>
@@ -268,7 +278,7 @@ const clearCloseDate = (event) => {
 
 
 
-                        <div class="mb-6 flex space-x-3 mt-8">
+                        <div class="mb-6 flex space-x-3 mt-10">
                             <label for="message"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Publish
                                 Date</label>
