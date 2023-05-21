@@ -3,7 +3,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { addAnnouncement } from '../assets/data-manager.js'
 import { announcementDetail, announcementById, fetchCategory, categories, updateAnnouncementbyId } from '../assets/data-manager';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { onBeforeMount } from 'vue';
 import router from '../router/index.js';
 
@@ -14,6 +14,11 @@ const publishtime = ref(null)
 const closeDate = ref(null)
 const closetime = ref(null)
 const display = ref(false)
+const checkDis = ref(false)
+const checkTi = ref(false)
+const checkPub = ref(false)
+const checkClose = ref(false)
+
 
 
 onBeforeMount(async () => {
@@ -56,7 +61,7 @@ const changeTime = (date) => {
         return formattedTime
     }
 }
-const createAnn =  ref({
+const createAnn = ref({
     announcementTitle: "",
     publishDate: "",
     closeDate: "",
@@ -88,7 +93,7 @@ const check = () => {
     const timeclo1 = new Date(data1.value.closeDate).getTime()
     if (
         data1.value.announcementTitle !== createAnn.value.announcementTitle ||
-        data1.value.announcementDescription !== createAnn.value.announcementDescription ||
+        (data1.value.announcementDescription !== createAnn.value.announcementDescription && createAnn.value.announcementDescription.replace(/<[^>]+>/g, '') !== "") ||
         c !== createAnn.value.categoryId ||
         data1.value.announcementDisplay !== a ||
         checktime(timepub) !== timepub1 ||
@@ -103,7 +108,17 @@ const check = () => {
 
 
 const submit = async () => {
-    if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "") {
+    if (createAnn.value.announcementTitle === "") {
+        checkTi.value = true
+        setTimeout(() => {
+            checkTi.value = false
+        },2000)
+    } else if (createAnn.value.announcementDescription.replace(/<[^>]+>/g, '') === "") {
+        checkDis.value = true
+        setTimeout(() => {
+            checkDis.value = false
+        },2000)
+    } else if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "" && validateTimepublish() && validateTimeClose()) {
         createAnn.value.publishDate = formatDateTime(publishDate.value, publishtime.value)
         createAnn.value.closeDate = formatDateTime(closeDate.value, closetime.value)
         createAnn.value.announcementDisplay = display.value ? "Y" : "N"
@@ -114,17 +129,15 @@ const submit = async () => {
             await addAnnouncement(createAnn.value)
             router.push({ name: 'Home' })
         }
-
+ 
     }
 }
 
 
 
 
-
 const validateDatepublish = () => {
     if (publishDate.value) {
-
         const inputDate = new Date(publishDate.value)
         inputDate.setHours(0, 0, 0, 0)
         const currentDate = new Date()
@@ -133,25 +146,16 @@ const validateDatepublish = () => {
         clPub.setHours(0, 0, 0, 0)
 
 
-
-
         if (inputDate < currentDate) {
             publishDate.value = null
-            // Date is in the past
-            console.log(('Invalid date: Date cannot be in the past'));
         } else {
             !publishtime.value ? publishtime.value = "06:00" : ''
-            console.log('Valid date')
         }
         if (inputDate < clPub) {
             publishDate.value = null
             publishtime.value = null
         }
-    } else {
-
-
-        console.log('Invalid date: Date not selected')
-    }
+    } 
 };
 
 
@@ -161,27 +165,53 @@ const validateDateclose = () => {
         clDate.setHours(0, 0, 0, 0)
         const pubDate = new Date(publishDate.value)
         pubDate.setHours(0, 0, 0, 0)
-        console.log(clDate);
-        console.log(pubDate);
 
         if (clDate < pubDate) {
             closeDate.value = null
             closetime.value = null
-            console.log('Invalid date: Date cannot be in the past');
+            checkClose.value = true
+            setTimeout(() => {
+                checkClose.value = false
+            },3000)
         } else {
             !closetime.value ? closetime.value = "18:00" : ''
         }
-
         if (closetime.value < publishtime.value) {
             closetime.value = "18:00"
         }
 
-    } else {
-
-        console.log('Invalid date: Date not selected');
     }
 }
 
+const validateTimepublish = () => {
+    const p = new Date(publishDate.value + " " + publishtime.value)
+    const currentDate = new Date()
+    if (p <= currentDate) {
+        checkPub.value = true
+        setTimeout(() => {
+            checkPub.value = false
+        },3000)
+        return false
+    }
+    return true 
+}
+
+const validateTimeClose = () => {
+    const c = new Date(closeDate.value + " " + closetime.value)
+    const p = new Date(publishDate.value + " " + publishtime.value)
+    const currentDate = new Date()
+    console.log(c);
+    console.log(p);
+    console.log(c<=p);
+    if (c <= currentDate || c <= p) {
+        checkClose.value = true
+        setTimeout(() => {
+            checkClose.value = false
+        },3000)
+        return false
+    }
+    return true 
+}
 
 const clearPublishDate = (event) => {
     event.preventDefault()
@@ -195,7 +225,8 @@ const clearCloseDate = (event) => {
     closetime.value = null
 }
 
-console.log(createAnn.value.announcementDescription);
+
+
 
 
 </script>
@@ -204,7 +235,6 @@ console.log(createAnn.value.announcementDescription);
 
         <h3 class="text-center font-bold text-3xl text-emerald-500 ">Announcement Detail</h3>
         <div class="flex justify-center">
-            <!-- from -->
             <div class=" w-full max-w-2xl p-5 m-5 border border-emerald-400 rounded-lg shadow-xl">
                 <div class="grid gap-6 mb-6 md:grid-cols-1">
                     <form class="grid gap-6 md:grid-cols-1" @submit.prevent="submit">
@@ -213,7 +243,8 @@ console.log(createAnn.value.announcementDescription);
                                 class="block mb-2 text-sm font-medium text-gray-900  dark:text-white">Title</label>
                             <input type="text" id="title" v-model="createAnn.announcementTitle" maxlength="200"
                                 class="ann-title bg-gray-50 peer  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder=" " required>
+                                placeholder=" ">
+                            <p v-if="checkTi" class="absolute text-xs text-red-500">Please fill out this filed.</p>
                         </div>
                         <div class="mb-6 flex relative space-x-4 ">
                             <label class="text-sm font-medium text-gray-900 dark:text-white" for="category">Category</label>
@@ -224,23 +255,20 @@ console.log(createAnn.value.announcementDescription);
                         </div>
                         <div class="mb-6 flex space-x-2">
                             <label for="description"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <!--                        <textarea v-model=createAnn.announcementDescription id="description" rows="4" required
-                                maxlength="10000"
-                                class="ann-description block p-2.5 w-full peer text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Write your thoughts here..."></textarea> -->
-                                <div class="w-full ">
-                        <QuillEditor theme="snow" toolbar="minimal" v-model:content="createAnn.announcementDescription"
-                                contentType="html" />
+                                class="block  text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <div class="w-3/4 h-3/4 " >
+                               <QuillEditor theme="snow" toolbar="full" 
+                                    v-model:content="createAnn.announcementDescription" contentType="html" />
+                                <p v-if="checkDis" class="text-xs absolute text-red-500">Please fill out this filed.</p>
+                            </div>
+
                         </div>
-                            
-                        </div>
-                       
 
 
 
 
-                        <div class="mb-6 flex space-x-3 mt-5">
+
+                        <div class="mb-6 flex space-x-3 mt-8">
                             <label for="message"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Publish
                                 Date</label>
@@ -259,8 +287,8 @@ console.log(createAnn.value.announcementDescription);
                                     placeholder="Select date">
                             </div>
                             <div class="relative max-w-sm flex ">
-                                <input type="time" v-model="publishtime" :disabled="publishDate === null"
-                                    class="ann-publish-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <input type="time" v-model="publishtime" :disabled="publishDate === null" @change="validateTimepublish"
+                                    class="ann-publish-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> 
                             </div>
                             <div class="relative max-w-sm flex ">
                                 <button @click="clearPublishDate($event)"
@@ -268,9 +296,12 @@ console.log(createAnn.value.announcementDescription);
                                     clear
                                 </button>
                             </div>
+                            <p v-if="checkPub" class="text-xs absolute text-red-500 mt-11">Date or Time must be greater than the current time.</p>
                         </div>
+                        
                         <div class="mb-6 flex space-x-3">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pr-3">Close
+                            <label for="message"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pr-3">Close
                                 Date</label>
                             <div class="relative max-w-sm flex  ">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -286,7 +317,7 @@ console.log(createAnn.value.announcementDescription);
                                     placeholder="Select date">
                             </div>
                             <div class="relative max-w-sm flex ">
-                                <input type="time" @change="validateDateclose" v-model="closetime"
+                                <input type="time" @change="validateTimeClose" v-model="closetime"
                                     :disabled="closeDate === null"
                                     class="ann-close-time bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
@@ -296,6 +327,7 @@ console.log(createAnn.value.announcementDescription);
                                     clear
                                 </button>
                             </div>
+                            <p v-if="checkClose" class="text-xs absolute text-red-500 mt-11">Date or Time must be greater than the current time and publish time.</p>
                         </div>
                         <div class="flex items-start mb-6">
                             <div class="flex items-center h-5">

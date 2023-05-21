@@ -14,7 +14,7 @@ async function getAnnounment() {
     }
 }
 
-async function getMode(mode="active", size=5, page=0, category=0) {
+async function getMode(mode="active", size=5, page=0, category=0 ) {
     try {
         const res = await fetch(`${API_HOST}/pages?mode=${mode}&page=${page}&size=${size}&category=${category}`)
         if (res.ok) {
@@ -53,9 +53,9 @@ async function getCategoriesById(id) {
     }
 }
 
-async function getAnnounmentById(id) {
+async function getAnnounmentById(id , count=false) {
     try {
-        const res = await fetch(`${API_HOST}/${id}`)
+        const res = await fetch(`${API_HOST}/${id}?count=${count}`)
         if (res.ok) {
             const announment = res.json()
             return announment
@@ -92,8 +92,7 @@ async function updateAnnouncement(announcement, id){
             body: JSON.stringify(announcement)
         })
         if (res.ok) {}
-        // console.log("Update Successfully")
-        else throw new Error('cannot add!')
+        else throw new Error('cannot update!')
     } catch (err) {
         console.log(err)
     }
@@ -105,7 +104,6 @@ async function deleteAnnoumcement(announcement){
             method: 'DELETE'
         })
         if (res.ok) {
-            // console.log("Delete Successfully")
         } else throw new Error('cannot delete!')
     } catch (err) {
         console.log(err)

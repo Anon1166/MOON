@@ -36,10 +36,14 @@ public class AnnouncesService {
 
 
 
-    public AnnouncesDetailDto getAnnouncesById(Integer annId) {
-        Announces m = announcesRepository.findById(annId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id " + annId + "does not exist !!!"));
+    public AnnouncesDetailDto getAnnouncesById(Integer annId, Boolean count) {
+        Announces m = announcesRepository.findById(annId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Announcement id " + annId + "does not exist !!!"));
+        if (count) {
+            m.setCount(m.getCount()+1);
+            announcesRepository.saveAndFlush(m);
+        }
         return modelMapper.map(m, AnnouncesDetailDto.class);
-
 
     }
 
@@ -75,12 +79,14 @@ public class AnnouncesService {
     public EditAnnDto createAnnouncement(InputAnnouncesDTO announces) {
         Categories category = categoriesRepository.findById(announces.getCategoryId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categories id " + announces.getCategoryId() + " does not exist !!!"));
-        System.out.println(announces.getAnnouncementDisplay());
         if (announces.getAnnouncementDisplay() == null) {
             announces.setAnnouncementDisplay("N");
+
         }
+
         Announces announcement = modelMapper.map(announces, Announces.class);
         announcement.setCategories(category);
+        announcement.setCount(0);
         announcesRepository.saveAndFlush(announcement);
         return modelMapper.map(announcement, EditAnnDto.class);
     }
@@ -113,7 +119,7 @@ public class AnnouncesService {
 
 
     //PAGE
-    public PageDTO<AnnouncesDto> getAnnouncementPage(String mode, int page, int size, int category) {
+    public PageDTO<AnnouncesDto> getAnnouncementPage(String mode, int page, int size, int category ) {
         try {
             List<AnnouncesDto> announcesList = getAnnounces(mode);
             List<AnnouncesDto> returnList;

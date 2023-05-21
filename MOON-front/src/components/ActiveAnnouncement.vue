@@ -33,6 +33,7 @@ const filterCategorys = async () => {
 }
 
 const userView = (id) => {
+    
     router.push({ name: 'UserView', params: { id: id } })
 
 }

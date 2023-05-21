@@ -31,6 +31,9 @@ public class Announces {
     @Column(name="closeDate")
     private ZonedDateTime closeDate ;
 
+    @Column(name ="viewCount")
+    private  Integer count;
+
     @Enumerated(EnumType.STRING)
     private Enum announcementDisplay;
 

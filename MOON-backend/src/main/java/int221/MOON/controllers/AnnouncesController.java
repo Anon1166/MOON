@@ -28,8 +28,9 @@ public class AnnouncesController {
         return announcesService.getAnnounces(mode);
     }
     @GetMapping("/{annId}")
-    public AnnouncesDetailDto getAnnouncesById(@PathVariable Integer annId){
-        return announcesService.getAnnouncesById(annId);
+    public AnnouncesDetailDto getAnnouncesById(@PathVariable Integer annId,
+                                               @RequestParam(defaultValue = "false") Boolean count){
+        return announcesService.getAnnouncesById(annId, count);
     }
 
     @PostMapping("")

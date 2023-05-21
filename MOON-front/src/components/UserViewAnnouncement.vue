@@ -1,18 +1,20 @@
 <script setup>
 import { announcementDetail, announcementById, changeTime } from '../assets/data-manager.js'
-import { onBeforeMount } from 'vue';
+import {  onBeforeMount  } from 'vue';
 import { useRoute } from 'vue-router';
 import { modeStore } from '../assets/modeAnnouncement.js'
 
 const { params } = useRoute()
 const modeAnn = modeStore()
-onBeforeMount(async () => {
-    await announcementById(params.id)
 
+onBeforeMount(async () => {
+    await announcementById(params.id , true)
 })
 </script>
 
 <template>
+    
+
     <div class=" flex justify-center w-full h-full p-20 ">
         <div class=" item-card h-3/4 w-3/4 bg-base-100 shadow-xl border border-emerald-400 rounded-lg">
             <div class="card-body ">
@@ -23,7 +25,7 @@ onBeforeMount(async () => {
                     </div>
                 </div>
                 <p class="ann-category opacity-75">{{ announcementDetail.announcementCategory }}</p>
-                <div v-html="announcementDetail.announcementDescription" class="ann-description"></div>
+                <div v-html="announcementDetail.announcementDescription" class="ann-description ql-editor "></div>
                 <div class="card-actions justify-end">
                     <button @click="$router.go(-1)" class="ann-button btn btn-outline btn-error">back</button>
                 </div>

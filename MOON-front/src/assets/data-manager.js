@@ -17,8 +17,8 @@ const fetchMode = async (mode, page, category) => {
   annMode.value = await getMode(mode, 5, page, category)
 }
 
-const announcementById = async (id) => {
-  announcementDetail.value = await getAnnounmentById(id)
+const announcementById = async (id , count) => {
+  announcementDetail.value = await getAnnounmentById(id , count)
 }
 
 const addAnnouncement = async (ann) => { 

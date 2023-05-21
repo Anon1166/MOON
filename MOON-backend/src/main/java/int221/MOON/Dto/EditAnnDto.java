@@ -20,6 +20,7 @@ public class EditAnnDto {
     private String announcementDescription;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
+    private  Integer count;
     @Enumerated(EnumType.STRING)
     private Enum announcementDisplay;
     @JsonIgnore

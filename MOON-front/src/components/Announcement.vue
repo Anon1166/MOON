@@ -47,6 +47,7 @@ const filterAnn = computed(() => {
               <th class="bg-emerald-400 text-black hidden sm:table-cell">Publish Date</th>
               <th class="bg-emerald-400 text-black hidden sm:table-cell">Close Date</th>
               <th class="bg-emerald-400 text-black text-center">Display</th>
+              <th class="bg-emerald-400 text-black text-center">Views</th>
               <th class="bg-emerald-400 text-black text-center">Action</th>
             </tr>
           </thead>
@@ -63,6 +64,7 @@ const filterAnn = computed(() => {
               }}</td>
               <td v-else class="hidden sm:table-cell text-center ann-close-date">-</td>
               <td class="ann-display text-center">{{ item.announcementDisplay }}</td>
+              <td class="ann-counter text-center">{{ item.count }}</td>
               <td class="ann-button space-x-2 flex justify-center">
                 <router-link :to="{ name: 'AnnouncementView', params: { id: item.id } }">
                   <button class="btn btn-outline btn-success w-20 btn-sm rounded-md font-bold ">view</button>

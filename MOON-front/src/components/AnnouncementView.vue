@@ -3,14 +3,12 @@ import { announcementDetail, announcementById, changeTime } from '../assets/data
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '../../src/router/index';
-import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 const load = ref('')
 const { params } = useRoute()
 
 onBeforeMount(async () => {
   await announcementById(params.id)
-  console.log(announcementDetail.value.announcementDescription)
   if (!announcementDetail.value) {
     alert("The request page is not available")
     router.push('/admin/announcement')
@@ -25,13 +23,16 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+
+  
   <div v-if="load" class="mx-auto px-6 sm:px-8 md:px-10 max-w-7xl">
     <div class="py-6 sm:py-8 md:py-10">
-      <h1 class="text-3xl font-bold text-center ">AnnouncementDetail</h1>
+      <h1 class="text-3xl font-bold text-center text-emerald-500 ">AnnouncementDetail</h1>
     </div>
-    <div class="overflow-x-auto  ">
-      <div  theme="snow" v-html="announcementDetail.announcementDescription" class="ann-description p-2"></div>
-      <table class="ann-item  w-full border border-separate rounded-lg text-left ">
+    <div class="flex justify-end w-full font-bold">view {{announcementDetail.count}}</div>
+    <div class="overflow-x-auto border  rounded-lg text-left border-emerald-500 shadow-lg   ">
+      
+      <table class="ann-item  w-full ">
         <tr>
           <th class="p-2 ">Title</th>
           <td class="ann-title p-2">{{ announcementDetail.announcementTitle }}</td>
@@ -42,7 +43,7 @@ onBeforeMount(async () => {
         </tr>
         <tr>
           <th class="p-2">Description</th>
-          <td v-html="announcementDetail.announcementDescription" class="ann-description p-2"></td>
+          <div  v-html="announcementDetail.announcementDescription" class=" ql-editor ann-description p-2"></div>
         </tr>
         <tr>
           <th class="p-2">Publish Date</th>
@@ -64,16 +65,13 @@ onBeforeMount(async () => {
       </table>
     </div>
     <div class="mt-6 sm:mt-8 md:mt-10 flex  ann-button space-x-3">
-      <button class="btn-success btn-sm rounded-md bg-green-200 font-bold" @click="$router.go(-1)">Back</button>
+      <button class="btn btn-outline btn-success btn-sm rounded-md  font-bold" @click="$router.go(-1)">Back</button>
       <router-link :to="{ name: 'AddAnnouncementEdit', params: { id: params.id } }">
-      <button class="btn-success btn-sm rounded-md hover:bg-blue-400 bg-blue-200 font-bold" >Edit</button>
+      <button class="btn btn-outline btn-accent btn-sm rounded-md font-bold" >Edit</button>
       </router-link>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* td {
-  padding-left: 3em;
-} */
 </style>
