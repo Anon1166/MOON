@@ -127,8 +127,7 @@ async function deleteAnnoumcement(announcement){
         router.push({ name: 'Home' })
         }
     } catch (err) {
-        console.log(err)
-    }
+        }
 } 
 
 
