@@ -9,13 +9,8 @@ const { params } = useRoute()
 
 onBeforeMount(async () => {
   await announcementById(params.id)
-  if (!announcementDetail.value) {
-    alert("The request page is not available")
-    router.push('/admin/announcement')
-  }
-  else {
+  if (announcementDetail.value) {
     load.value = true
-
   }
 })
 
