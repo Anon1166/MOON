@@ -132,7 +132,6 @@ const submit = async () => {
             checkDes.value = false 
         },2000)
     } else if (createAnn.value.announcementTitle !== "" && createAnn.value.announcementDescription !== "" && validateTimepublish() && validateTimeClose()) {
-        console.log(createAnn.value.announcementTitle);
         createAnn.value.publishDate = formatDateTime(publishDate.value, publishtime.value)
         createAnn.value.closeDate = formatDateTime(closeDate.value, closetime.value)
         createAnn.value.announcementDisplay = display.value ? "Y" : "N"
